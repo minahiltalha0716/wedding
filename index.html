@@ -7,6 +7,21 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <!-- Password Auth Modal -->
+    <div id="authModal">
+        <div class="auth-modal-content">
+            <h2>Private Photos</h2>
+            <p>Enter your password to view private wedding photos.</p>
+            <form id="authForm">
+                        <div class="auth-form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required placeholder="Enter password">
+                </div>
+                <button type="submit" class="auth-submit">Unlock Photos</button>
+            </form>
+        </div>
+    </div>
+
     <header class="site-header">
         <div class="container">
             <h1 class="site-title">You are invited</h1>
@@ -21,6 +36,17 @@
                     <h2>Bride &amp; Groom</h2>
                     <p class="date">June 20, 2026</p>
                     <a class="rsvp" href="#rsvp">RSVP</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="photos" class="photos-section">
+            <div class="container">
+                <h3>Private Photos</h3>
+                <p>Your private wedding photos appear here after entering the password.</p>
+                <div class="gallery" id="photoGallery">
+                    <!-- Photos loaded here via JavaScript -->
+                    <!-- Example: <img id="photo-couple" src="" alt="Couple photo"> -->
                 </div>
             </div>
         </section>
