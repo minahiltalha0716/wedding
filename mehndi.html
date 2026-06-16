@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehndi Ceremony - Minahil & Talha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/invitation.css">
+    <style>
+        :root {
+            --mehndi-green: #1b3022;
+            --mehndi-gold: #d4af37;
+            --mehndi-gold-light: #f4df95;
+            --mehndi-text: #f8f3ef;
+            --mehndi-accent: #2d4f36;
+        }
+
+        body {
+            background-color: var(--mehndi-green);
+            color: var(--mehndi-text);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(27, 48, 34, 0.6), rgba(27, 48, 34, 0.6)),
+                        url('https://images.unsplash.com/photo-1590073844006-3a44a721c48b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-names { color: var(--mehndi-gold); }
+        .hero-date { border-color: var(--mehndi-gold); }
+        .invitation-box { border-color: var(--mehndi-gold); background: var(--mehndi-accent); }
+        .bismillah { color: var(--mehndi-gold); }
+        .couple-names { color: var(--mehndi-gold); }
+        .section-title { color: var(--mehndi-gold); }
+        .event-card { border-left-color: var(--mehndi-gold); }
+        .event-card h3 { color: var(--mehndi-gold-light); }
+        .btn-gold { color: var(--mehndi-gold); border-color: var(--mehndi-gold); }
+        .btn-gold:hover { background: var(--mehndi-gold); color: var(--mehndi-green); }
+        .countdown-number { color: var(--mehndi-gold); }
+        .rsvp-section { background: var(--mehndi-accent); text-align: center; padding: 80px 20px; margin-bottom: 80px; }
+        .info-item h4 { color: var(--mehndi-gold); }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 80px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/5;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .info-item { text-align: center; padding: 20px; }
+
+        @media (max-width: 768px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <h1 class="hero-names">Minahil</h1>
+        <p class="hero-weds">&</p>
+        <h1 class="hero-names">Talha</h1>
+        <p class="hero-date">December 12, 2024</p>
+        <a href="#rsvp" class="btn-gold" style="margin-top: 40px; border-radius: 0;">RSVP</a>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="invitation-box">
+            <p class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+            <p class="invite-text">With the grace of Almighty Allah,</p>
+            <p class="invite-text">Together with our families, we invite you to celebrate our Mehndi ceremony</p>
+            <h2 class="couple-names">Minahil & Talha</h2>
+            <p class="invite-text">Your presence and prayers are the greatest gifts we could receive.</p>
+        </div>
+
+        <h2 class="section-title">The Ceremony</h2>
+        <div class="event-details" style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-bottom: 80px;">
+            <div class="event-card" style="width: 100%;">
+                <h3>Mehndi</h3>
+                <p class="event-info">Thursday, 12th December 2024</p>
+                <p class="event-info">6:00 PM Onwards</p>
+                <p class="event-info">Grand Palm Hotel, Lahore</p>
+                <a href="https://maps.google.com" target="_blank" class="btn-gold">See the Route</a>
+            </div>
+        </div>
+
+        <h2 class="section-title">Bride & Groom</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" alt="Minahil">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Talha">
+            </div>
+        </div>
+
+        <div id="rsvp" class="rsvp-section">
+            <h2 class="section-title" style="margin-bottom: 20px;">RSVP</h2>
+            <p class="invite-text">We look forward to celebrating with you!</p>
+            <p class="invite-text" style="margin-bottom: 30px;">Kindly respond by December 1st, 2024</p>
+            <a href="https://wa.me/923000000000" class="btn-gold">RSVP via WhatsApp</a>
+        </div>
+
+        <h2 class="section-title">Things to Know</h2>
+        <div class="info-grid">
+            <div class="info-item">
+                <h4 style="font-family: Montserrat, sans-serif; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Hashtag</h4>
+                <p>#MinahilWedTalha</p>
+            </div>
+            <div class="info-item">
+                <h4 style="font-family: Montserrat, sans-serif; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Weather</h4>
+                <p>Cool Lahore winter evening. Light wraps recommended.</p>
+            </div>
+            <div class="info-item">
+                <h4 style="font-family: Montserrat, sans-serif; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Parking</h4>
+                <p>Valet parking is available at the entrance.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Follow the Action</h2>
+        <div style="text-align: center; margin-bottom: 80px;">
+            <p class="invite-text">Share your favorite moments with us</p>
+            <a href="https://instagram.com" target="_blank" class="btn-gold">Open Instagram</a>
+        </div>
+
+        <h2 class="section-title">Counting Down</h2>
+        <div class="countdown" id="timer">
+            <div class="countdown-box">
+                <span class="countdown-number" id="days">00</span>
+                <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-label">Seconds</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ for Minahil & Talha</p>
+            <p style="margin-top: 10px;">© 2024</p>
+        </div>
+    </div>
+
+    <script>
+        // Countdown Logic
+        const targetDate = new Date("Dec 12, 2024 18:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                document.getElementById("timer").innerHTML = "<h3 style='color: var(--mehndi-gold); text-align: center; width: 100%; font-family: \"Great Vibes\", cursive; font-size: 3rem;'>The Celebration has Begun!</h3>";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

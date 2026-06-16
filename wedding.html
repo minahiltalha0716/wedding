@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barat Ceremony - Minahil & Talha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/invitation.css">
+    <style>
+        :root {
+            --wedding-red: #7b1414;
+            --wedding-gold: #caa43a;
+            --wedding-gold-light: #e6c87a;
+            --wedding-text: #f8f3ef;
+            --wedding-accent: #5e0f0f;
+        }
+
+        body {
+            background-color: var(--wedding-red);
+            color: var(--wedding-text);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(123, 20, 20, 0.6), rgba(123, 20, 20, 0.6)),
+                        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-names { color: var(--wedding-gold); }
+        .hero-date { border-color: var(--wedding-gold); }
+        .invitation-box { border-color: var(--wedding-gold); background: var(--wedding-accent); }
+        .bismillah { color: var(--wedding-gold); }
+        .couple-names { color: var(--wedding-gold); }
+        .section-title { color: var(--wedding-gold); }
+        .event-card { border-left-color: var(--wedding-gold); }
+        .event-card h3 { color: var(--wedding-gold-light); }
+        .btn-gold { color: var(--wedding-gold); border-color: var(--wedding-gold); }
+        .btn-gold:hover { background: var(--wedding-gold); color: var(--wedding-red); }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <h1 class="hero-names">Minahil</h1>
+        <p class="hero-weds">&</p>
+        <h1 class="hero-names">Talha</h1>
+        <p class="hero-date">December 14, 2024</p>
+        <a href="#rsvp" class="btn-gold" style="margin-top: 40px; border-radius: 0;">RSVP</a>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="invitation-box">
+            <p class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+            <p class="invite-text">With the grace of Almighty Allah,</p>
+            <p class="invite-text">Together with our families, we invite you to celebrate our Barat ceremony</p>
+            <h2 class="couple-names">Minahil & Talha</h2>
+            <p class="invite-text">Your presence and prayers are the greatest gifts we could receive.</p>
+        </div>
+
+        <h2 class="section-title">The Ceremony</h2>
+        <div class="event-details" style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-bottom: 80px;">
+            <div class="event-card" style="width: 100%;">
+                <h3>Barat</h3>
+                <p class="event-info">Saturday, 14th December 2024</p>
+                <p class="event-info">7:00 PM Onwards</p>
+                <p class="event-info">PC Hotel, Lahore</p>
+                <a href="https://maps.google.com" target="_blank" class="btn-gold">See the Route</a>
+            </div>
+        </div>
+
+        <div id="rsvp" style="text-align: center; padding: 40px;">
+            <a href="https://wa.me/923000000000" class="btn-gold">RSVP via WhatsApp</a>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ for Minahil & Talha</p>
+            <p style="margin-top: 10px;">© 2024</p>
+        </div>
+    </div>
+</body>
+</html>

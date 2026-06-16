@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Wedding Gallery - Minahil & Talha</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .gallery-section { padding: 4rem 0; min-height: 80vh; }
+        .gallery-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .back-home { margin-bottom: 2rem; display: inline-block; color: var(--accent-red); text-decoration: none; font-weight: 600; }
+        .back-home:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">Private Wedding Photos</h1>
+            <p class="subtitle">Secure gallery for family and friends</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="gallery-section">
+            <div class="gallery-container">
+                <a href="/" class="back-home">← Back to Home</a>
+
+                <!-- Auth Modal (managed by main.js) -->
+                <div id="authModal" style="display: none;">
+                    <div class="auth-modal-content" style="margin: 0 auto;">
+                        <h2>Private Access</h2>
+                        <p>Please enter the password provided in your invitation to unlock the gallery.</p>
+                        <form id="authForm">
+                            <div class="auth-form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" required placeholder="Enter password">
+                            </div>
+                            <button type="submit" class="auth-submit">Unlock Gallery</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Gallery Container (managed by main.js) -->
+                <div class="gallery" id="photoGallery">
+                    <!-- Photos will be loaded here by main.js -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Made with ❤️ for Minahil & Talha</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/crypto.js"></script> <!-- Dependency for main.js if it exists separately -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

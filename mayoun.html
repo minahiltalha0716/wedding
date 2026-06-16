@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mayoun Ceremony - Minahil & Talha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/invitation.css">
+    <style>
+        :root {
+            --mayoun-yellow: #f4c430;
+            --mayoun-gold: #b8860b;
+            --mayoun-gold-light: #ffd700;
+            --mayoun-text: #333333;
+            --mayoun-bg: #fffcf0;
+            --mayoun-accent: #fdf5e6;
+        }
+
+        body {
+            background-color: var(--mayoun-bg);
+            color: var(--mayoun-text);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(244, 196, 48, 0.4), rgba(244, 196, 48, 0.4)),
+                        url('https://images.unsplash.com/photo-1544078751-58fee2d8a03b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-names { color: var(--mayoun-gold); text-shadow: 2px 2px 4px rgba(255,255,255,0.5); }
+        .hero-date { border-color: var(--mayoun-gold); }
+        .invitation-box { border-color: var(--mayoun-gold); background: var(--mayoun-accent); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .bismillah { color: var(--mayoun-gold); }
+        .couple-names { color: var(--mayoun-gold); }
+        .section-title { color: var(--mayoun-gold); }
+        .event-card { border-left-color: var(--mayoun-yellow); background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .event-card h3 { color: var(--mayoun-gold); }
+        .btn-gold { background: var(--mayoun-yellow); color: white; border: none; border-radius: 4px; }
+        .btn-gold:hover { background: var(--mayoun-gold); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <h1 class="hero-names">Minahil</h1>
+        <p class="hero-weds">&</p>
+        <h1 class="hero-names">Talha</h1>
+        <p class="hero-date">December 10, 2024</p>
+        <a href="#rsvp" class="btn-gold" style="margin-top: 40px;">RSVP</a>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="invitation-box">
+            <p class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+            <p class="invite-text">With the grace of Almighty Allah,</p>
+            <p class="invite-text">Together with our families, we invite you to celebrate our Mayoun ceremony</p>
+            <h2 class="couple-names">Minahil & Talha</h2>
+            <p class="invite-text">Your presence and prayers are the greatest gifts we could receive.</p>
+        </div>
+
+        <h2 class="section-title">The Ceremony</h2>
+        <div class="event-details" style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-bottom: 80px;">
+            <div class="event-card" style="width: 100%;">
+                <h3>Mayoun</h3>
+                <p class="event-info">Tuesday, 10th December 2024</p>
+                <p class="event-info">6:00 PM Onwards</p>
+                <p class="event-info">Family Residence, Lahore</p>
+                <a href="https://maps.google.com" target="_blank" class="btn-gold">See the Route</a>
+            </div>
+        </div>
+
+        <div id="rsvp" style="text-align: center; padding: 40px;">
+            <a href="https://wa.me/923000000000" class="btn-gold">RSVP via WhatsApp</a>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ for Minahil & Talha</p>
+            <p style="margin-top: 10px;">© 2024</p>
+        </div>
+    </div>
+</body>
+</html>
