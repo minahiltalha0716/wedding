@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehndi Mubarak 🌿✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #F4A200;
+    --marigold: #FFB800;
+    --gold: #D4AF37;
+    --green: #2D5A27;
+    --green-light: #4A8A3F;
+    --magenta: #C8215A;
+    --red: #B5202A;
+    --cream: #FDF3E3;
+    --deep-cream: #F5E6C8;
+    --teal: #1A7A6E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='24'%3E🌸%3C/text%3E%3C/svg%3E"), auto;
+  }
+
+  /* ---- LOADING SCREEN ---- */
+  #loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #1a0a05;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #loader.hide { opacity: 0; visibility: hidden; }
+  .loader-text {
+    color: var(--gold);
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    animation: pulse 1s infinite alternate;
+    margin-top: 20px;
+  }
+  @keyframes pulse { from { opacity: 0.5; } to { opacity: 1; } }
+
+  /* ---- PARTICLES ---- */
+  #particles {
+    position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    font-size: 1.2rem;
+    animation: fall linear infinite;
+    opacity: 0.7;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ---- JHOOMER HERO ---- */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #1a0a05 0%, #2D1A00 40%, #4A2800 70%, var(--deep-cream) 100%);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Fairy lights string */
+  .fairy-lights {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex; justify-content: center;
+    gap: 0;
+    z-index: 3;
+  }
+  .light-string {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 80px;
+  }
+
+  /* Jhoomer SVG */
+  #jhoomer-wrap {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    animation: jhoomer-swing 0s ease-out forwards;
+  }
+  #jhoomer-wrap.animate {
+    animation: jhoomer-drop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  @keyframes jhoomer-drop {
+    0% { top: -300px; opacity: 0; }
+    100% { top: -30px; opacity: 1; }
+  }
+
+  .jhoomer-svg {
+    width: 220px;
+    filter: drop-shadow(0 0 30px rgba(212,175,55,0.8)) drop-shadow(0 0 60px rgba(244,162,0,0.5));
+    animation: jhoomer-sway 4s ease-in-out infinite;
+    transform-origin: top center;
+  }
+  @keyframes jhoomer-sway {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  /* Bride sticker */
+  #bride-sticker {
+    position: relative;
+    z-index: 5;
+    margin-top: 80px;
+    opacity: 0;
+    transform: translateY(40px) scale(0.8);
+    transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  #bride-sticker.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  #bride-sticker img {
+    width: 260px;
+    filter: drop-shadow(0 0 25px rgba(212,175,55,0.6));
+    animation: bride-float 3s ease-in-out infinite;
+  }
+  @keyframes bride-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* Hero title */
+  .hero-title-wrap {
+    text-align: center;
+    z-index: 6;
+    margin-top: -20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease 0.5s;
+  }
+  .hero-title-wrap.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hero-urdu {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(212,175,55,0.8), 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 0.05em;
+  }
+  .hero-subtitle {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--cream);
+    margin-top: 8px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  }
+  .hero-names {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    color: var(--marigold);
+    margin-top: 10px;
+    text-shadow: 0 0 15px rgba(255,184,0,0.6);
+  }
+
+  /* Scroll arrow */
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%; transform: translateX(-50%);
+    color: var(--gold);
+    text-align: center;
+    animation: bounce 2s ease-in-out infinite;
+    z-index: 10;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1rem;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(10px); }
+  }
+
+  /* ---- BUNTING BANNER ---- */
+  .bunting-section {
+    background: var(--magenta);
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+  }
+  .bunting-row {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 15px 0;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .bunting-flag {
+    width: 0;
+    height: 0;
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+    border-top: 35px solid;
+    margin: 0 2px;
+    animation: flag-wave 2s ease-in-out infinite;
+  }
+  .bunting-flag:nth-child(odd) { animation-delay: 0.2s; }
+  @keyframes flag-wave {
+    0%, 100% { transform: rotateZ(-5deg); }
+    50% { transform: rotateZ(5deg); }
+  }
+
+  /* ---- SECTIONS GENERAL ---- */
+  section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0; transform: translateX(-60px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0; transform: translateX(60px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ---- SECTION HEADER ---- */
+  .sec-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  .sec-eyebrow {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    color: var(--magenta);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: var(--green);
+    position: relative;
+    display: inline-block;
+  }
+  .sec-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; left: 50%;
+    transform: translateX(-50%);
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, var(--saffron), var(--gold), var(--saffron));
+    border-radius: 2px;
+  }
+
+  /* ---- MEHNDI PATTERN BG ---- */
+  .mehndi-bg {
+    background: var(--cream);
+    position: relative;
+  }
+  .mehndi-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='2' fill='%23D4AF3722'/%3E%3Ccircle cx='30' cy='30' r='8' fill='none' stroke='%23D4AF3715' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='15' fill='none' stroke='%23D4AF3710' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* ---- COUNTDOWN SECTION ---- */
+  #countdown {
+    background: linear-gradient(135deg, #1a0a05 0%, #2D1800 50%, #1a0a05 100%);
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #countdown::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23D4AF3710' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='25' fill='none' stroke='%23D4AF3708' stroke-width='1'/%3E%3C/svg%3E") repeat;
+    opacity: 0.5;
+  }
+
+  .countdown-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .countdown-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--deep-cream);
+    margin-bottom: 50px;
+    opacity: 0.8;
+  }
+  .countdown-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .count-card {
+    background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 16px;
+    padding: 25px 30px;
+    min-width: 110px;
+    position: relative;
+    overflow: hidden;
+  }
+  .count-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .count-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--gold);
+    display: block;
+    text-shadow: 0 0 20px rgba(212,175,55,0.5);
+    line-height: 1;
+  }
+  .count-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(253,243,227,0.7);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* ---- EVENT DETAILS ---- */
+  #event-details {
+    padding: 90px 20px;
+    background: var(--cream);
+  }
+  .event-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .event-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(45,90,39,0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+  .event-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(45,90,39,0.2);
+  }
+  .card-top {
+    height: 8px;
+    background: linear-gradient(90deg, var(--green), var(--teal), var(--green));
+  }
+  .card-body { padding: 35px 30px; }
+  .card-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+  }
+  .card-event-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: var(--magenta);
+    margin-bottom: 5px;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--green);
+    margin-bottom: 20px;
+  }
+  .card-detail {
+    display: flex; align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 15px;
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .card-detail-icon {
+    width: 36px; height: 36px;
+    background: var(--deep-cream);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: -2px;
+  }
+  .card-detail strong {
+    display: block;
+    color: var(--green);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+
+  /* Mehndi pattern card accent */
+  .card-pattern {
+    position: absolute;
+    right: -20px; bottom: -20px;
+    font-size: 6rem;
+    opacity: 0.06;
+    transform: rotate(-15deg);
+    pointer-events: none;
+  }
+
+  /* ---- DRESS CODE ---- */
+  #dress-code {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, var(--green) 0%, #1a3a16 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #dress-code .sec-title { color: var(--cream); }
+  #dress-code .sec-title::after { background: linear-gradient(90deg, var(--saffron), var(--gold)); }
+  #dress-code .sec-eyebrow { color: var(--marigold); }
+
+  .palette-row {
+    display: flex; justify-content: center;
+    gap: 20px; flex-wrap: wrap;
+    margin: 40px 0;
+  }
+  .palette-chip {
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  .palette-chip:hover { transform: scale(1.1) translateY(-5px); }
+  .chip-swatch {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.2);
+    margin: 0 auto 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    transition: box-shadow 0.3s ease;
+  }
+  .palette-chip:hover .chip-swatch {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .chip-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1rem;
+    color: var(--cream);
+  }
+  .dress-note {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    color: rgba(253,243,227,0.8);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ---- LOCATION ---- */
+  #location {
+    padding: 90px 20px;
+    background: var(--deep-cream);
+    position: relative;
+  }
+
+  .location-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+  }
+  @media (max-width: 700px) {
+    .location-wrap { grid-template-columns: 1fr; }
+  }
+
+  .location-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--green);
+    margin-bottom: 15px;
+  }
+  .location-info p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .loc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  .loc-btn:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(45,90,39,0.3);
+  }
+
+  .map-placeholder {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    border: 3px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .map-anim {
+    font-size: 4rem;
+    animation: map-pulse 2s ease-in-out infinite;
+  }
+  @keyframes map-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  .map-label {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: var(--green);
+    text-align: center;
+  }
+  .map-pin-anim {
+    font-size: 2rem;
+    animation: pin-bounce 1s ease-in-out infinite;
+  }
+  @keyframes pin-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* ---- CLOSING ---- */
+  #closing {
+    padding: 100px 20px;
+    background: linear-gradient(135deg, #1a0a05 0%, #2D1800 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .closing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(212,175,55,0.5);
+    margin-bottom: 20px;
+  }
+  .closing-msg {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    color: var(--cream);
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+  .rsvp-note {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    color: rgba(253,243,227,0.6);
+    letter-spacing: 0.1em;
+  }
+
+  /* Sparkle effect */
+  .sparkle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: sparkle-anim 3s ease-in-out infinite;
+  }
+  @keyframes sparkle-anim {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: #0d0500;
+    padding: 25px;
+    text-align: center;
+    color: rgba(212,175,55,0.5);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+  }
+
+  /* Marigold garland border effect */
+  .garland-border {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 5px;
+    letter-spacing: 3px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bg-music" src="music.mp3" loop preload="auto"></audio>
+<button id="music-toggle" aria-label="Play music" style="position:fixed;left:16px;bottom:16px;z-index:9999;background:rgba(212,175,55,0.95);border:none;padding:10px 14px;border-radius:999px;font-family:'Dancing Script',cursive;font-size:1rem;display:none;">♫</button>
+
+<!-- LOADER -->
+<div id="loader">
+  <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="40" cy="40" r="35" fill="none" stroke="#D4AF37" stroke-width="2" stroke-dasharray="10 5" opacity="0.5">
+      <animateTransform attributeName="transform" type="rotate" values="0 40 40;360 40 40" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="40" cy="40" r="20" fill="none" stroke="#F4A200" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7">
+      <animateTransform attributeName="transform" type="rotate" values="360 40 40;0 40 40" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="40" y="45" text-anchor="middle" fill="#D4AF37" font-size="18">🌿</text>
+  </svg>
+  <div class="loader-text">Loading your invitation…</div>
+</div>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <!-- Fairy lights SVG -->
+  <svg class="light-string" viewBox="0 0 1200 80" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;width:100%;z-index:3;">
+    <defs>
+      <radialGradient id="bulbGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#FFD700" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <!-- wire -->
+    <path d="M0,15 Q150,35 300,15 Q450,35 600,15 Q750,35 900,15 Q1050,35 1200,15" fill="none" stroke="#5a3a1a" stroke-width="1.5" opacity="0.7"/>
+    <!-- bulbs along the wire -->
+    <g id="bulbs">
+      <ellipse cx="75" cy="28" rx="5" ry="7" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.3;0.9" dur="1.5s" begin="0s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="150" cy="22" rx="5" ry="7" fill="#FF6B6B" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.8s" begin="0.3s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="225" cy="30" rx="5" ry="7" fill="#4CAF50" opacity="0.9"><animate attributeName="opacity" values="0.9;0.4;0.9" dur="1.2s" begin="0.6s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="300" cy="22" rx="5" ry="7" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.3;0.9" dur="2s" begin="0.1s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="375" cy="30" rx="5" ry="7" fill="#FF6B6B" opacity="0.9"><animate attributeName="opacity" values="0.9;0.5;0.9" dur="1.6s" begin="0.4s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="450" cy="22" rx="5" ry="7" fill="#4CAF50" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.4s" begin="0.8s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="525" cy="30" rx="5" ry="7" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.4;0.9" dur="1.9s" begin="0.2s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="600" cy="22" rx="5" ry="7" fill="#FF6B6B" opacity="0.9"><animate attributeName="opacity" values="0.9;0.3;0.9" dur="1.7s" begin="0.5s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="675" cy="30" rx="5" ry="7" fill="#4CAF50" opacity="0.9"><animate attributeName="opacity" values="0.9;0.6;0.9" dur="1.3s" begin="0.9s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="750" cy="22" rx="5" ry="7" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="2.1s" begin="0.3s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="825" cy="30" rx="5" ry="7" fill="#FF6B6B" opacity="0.9"><animate attributeName="opacity" values="0.9;0.4;0.9" dur="1.5s" begin="0.7s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="900" cy="22" rx="5" ry="7" fill="#4CAF50" opacity="0.9"><animate attributeName="opacity" values="0.9;0.3;0.9" dur="1.8s" begin="0.1s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="975" cy="30" rx="5" ry="7" fill="#FFD700" opacity="0.9"><animate attributeName="opacity" values="0.9;0.5;0.9" dur="1.6s" begin="0.6s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="1050" cy="22" rx="5" ry="7" fill="#FF6B6B" opacity="0.9"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="2s" begin="0.4s" repeatCount="indefinite"/></ellipse>
+      <ellipse cx="1125" cy="30" rx="5" ry="7" fill="#4CAF50" opacity="0.9"><animate attributeName="opacity" values="0.9;0.4;0.9" dur="1.4s" begin="0.8s" repeatCount="indefinite"/></ellipse>
+    </g>
+  </svg>
+
+  <!-- Jhoomer (chandelier) -->
+  <div id="jhoomer-wrap">
+    <svg class="jhoomer-svg" viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFD700"/>
+          <stop offset="50%" stop-color="#D4AF37"/>
+          <stop offset="100%" stop-color="#B8860B"/>
+        </linearGradient>
+        <linearGradient id="rubyGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#FF6B6B"/>
+          <stop offset="100%" stop-color="#C8215A"/>
+        </linearGradient>
+        <linearGradient id="emeraldGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#4CAF50"/>
+          <stop offset="100%" stop-color="#2D5A27"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Chain from top -->
+      <line x1="110" y1="0" x2="110" y2="40" stroke="url(#goldGrad)" stroke-width="3"/>
+      <circle cx="110" cy="10" r="4" fill="url(#goldGrad)"/>
+      <circle cx="110" cy="20" r="3" fill="url(#goldGrad)"/>
+      <circle cx="110" cy="30" r="4" fill="url(#goldGrad)"/>
+
+      <!-- Main body - top dome -->
+      <ellipse cx="110" cy="58" rx="35" ry="18" fill="url(#goldGrad)" opacity="0.9"/>
+      <ellipse cx="110" cy="55" rx="28" ry="12" fill="#FFE566" opacity="0.4"/>
+
+      <!-- Decorative ring -->
+      <ellipse cx="110" cy="58" rx="35" ry="5" fill="none" stroke="#D4AF37" stroke-width="2"/>
+
+      <!-- Arms (5 arms spreading out) -->
+      <!-- Center arm -->
+      <line x1="110" y1="70" x2="110" y2="95" stroke="url(#goldGrad)" stroke-width="3"/>
+
+      <!-- Left arm 1 -->
+      <path d="M110,75 Q85,78 70,90" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+      <!-- Left arm 2 -->
+      <path d="M110,75 Q55,80 35,95" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+
+      <!-- Right arm 1 -->
+      <path d="M110,75 Q135,78 150,90" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+      <!-- Right arm 2 -->
+      <path d="M110,75 Q165,80 185,95" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+
+      <!-- Hanging chains from arms -->
+      <!-- Far left -->
+      <line x1="35" y1="95" x2="35" y2="130" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <!-- Near left -->
+      <line x1="70" y1="90" x2="68" y2="125" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <!-- Center -->
+      <line x1="110" y1="95" x2="110" y2="135" stroke="#D4AF37" stroke-width="2" stroke-dasharray="3,2"/>
+      <!-- Near right -->
+      <line x1="150" y1="90" x2="152" y2="125" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <!-- Far right -->
+      <line x1="185" y1="95" x2="185" y2="130" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+      <!-- Main center lamp -->
+      <ellipse cx="110" cy="120" rx="18" ry="22" fill="url(#rubyGrad)" opacity="0.9"/>
+      <ellipse cx="110" cy="112" rx="12" ry="8" fill="#FFB3B3" opacity="0.4"/>
+      <!-- lamp glow -->
+      <circle cx="110" cy="120" r="22" fill="#FF6B6B" opacity="0.1">
+        <animate attributeName="r" values="22;28;22" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.1;0.2;0.1" dur="2s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Side decorative gems -->
+      <!-- Far left gems -->
+      <ellipse cx="35" cy="138" rx="9" ry="13" fill="url(#emeraldGrad)" opacity="0.9"/>
+      <ellipse cx="35" cy="133" rx="6" ry="5" fill="#A5D6A7" opacity="0.4"/>
+      <!-- Hanging droplet far left -->
+      <ellipse cx="35" cy="155" rx="5" ry="9" fill="url(#rubyGrad)" opacity="0.9"/>
+      <line x1="35" y1="151" x2="35" y2="155" stroke="#D4AF37" stroke-width="1"/>
+
+      <!-- Near left gems -->
+      <ellipse cx="68" cy="133" rx="8" ry="11" fill="url(#rubyGrad)" opacity="0.9"/>
+      <ellipse cx="68" cy="128" rx="5" ry="4" fill="#FFB3B3" opacity="0.4"/>
+      <ellipse cx="68" cy="148" rx="4" ry="7" fill="url(#goldGrad)" opacity="0.9"/>
+      <line x1="68" y1="144" x2="68" y2="148" stroke="#D4AF37" stroke-width="1"/>
+
+      <!-- Center lamp bottom -->
+      <ellipse cx="110" cy="145" rx="6" ry="4" fill="#D4AF37"/>
+      <line x1="110" y1="149" x2="110" y2="165" stroke="#D4AF37" stroke-width="2"/>
+      <ellipse cx="110" cy="170" rx="8" ry="12" fill="url(#goldGrad)" opacity="0.9"/>
+      <ellipse cx="110" cy="164" rx="5" ry="4" fill="#FFE566" opacity="0.4"/>
+
+      <!-- Near right gems -->
+      <ellipse cx="152" cy="133" rx="8" ry="11" fill="url(#rubyGrad)" opacity="0.9"/>
+      <ellipse cx="152" cy="128" rx="5" ry="4" fill="#FFB3B3" opacity="0.4"/>
+      <ellipse cx="152" cy="148" rx="4" ry="7" fill="url(#goldGrad)" opacity="0.9"/>
+      <line x1="152" y1="144" x2="152" y2="148" stroke="#D4AF37" stroke-width="1"/>
+
+      <!-- Far right gems -->
+      <ellipse cx="185" cy="138" rx="9" ry="13" fill="url(#emeraldGrad)" opacity="0.9"/>
+      <ellipse cx="185" cy="133" rx="6" ry="5" fill="#A5D6A7" opacity="0.4"/>
+      <ellipse cx="185" cy="155" rx="5" ry="9" fill="url(#rubyGrad)" opacity="0.9"/>
+      <line x1="185" y1="151" x2="185" y2="155" stroke="#D4AF37" stroke-width="1"/>
+
+      <!-- Decorative chain loops bottom -->
+      <path d="M68,155 Q110,175 152,155" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.7"/>
+      <path d="M35,164 Q110,195 185,164" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+
+      <!-- Bottom tassels/fringe from center -->
+      <line x1="95" y1="185" x2="88" y2="215" stroke="#D4AF37" stroke-width="1.5"/>
+      <line x1="105" y1="187" x2="100" y2="220" stroke="#C8215A" stroke-width="1.5"/>
+      <line x1="110" y1="183" x2="110" y2="225" stroke="#D4AF37" stroke-width="2"/>
+      <line x1="115" y1="187" x2="120" y2="220" stroke="#C8215A" stroke-width="1.5"/>
+      <line x1="125" y1="185" x2="132" y2="215" stroke="#D4AF37" stroke-width="1.5"/>
+
+      <!-- Tassel ends -->
+      <ellipse cx="88" cy="218" rx="4" ry="6" fill="url(#rubyGrad)"/>
+      <ellipse cx="100" cy="223" rx="4" ry="6" fill="url(#emeraldGrad)"/>
+      <ellipse cx="110" cy="228" rx="5" ry="7" fill="url(#goldGrad)"/>
+      <ellipse cx="120" cy="223" rx="4" ry="6" fill="url(#emeraldGrad)"/>
+      <ellipse cx="132" cy="218" rx="4" ry="6" fill="url(#rubyGrad)"/>
+
+      <!-- Sparkle dots around jhoomer -->
+      <circle cx="55" cy="60" r="2" fill="#FFD700" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0;0.8" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="170" cy="55" r="2.5" fill="#FF6B6B" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0;0.8" dur="1.2s" begin="0.3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="20" cy="120" r="2" fill="#D4AF37" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0;0.8" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="200" cy="115" r="2.5" fill="#FFD700" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0;0.8" dur="1.8s" begin="0.9s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+
+  <!-- Bride Sticker -->
+  <div id="bride-sticker">
+    <img src="/mnt/user-data/uploads/1781630934262_image.png" alt="Bride illustration">
+  </div>
+
+  <!-- Hero Text -->
+  <div class="hero-title-wrap" id="hero-text">
+    <div class="hero-urdu">مہندی مبارک</div>
+    <div class="hero-subtitle">You are warmly invited to celebrate</div>
+    <div class="hero-names">The Mehndi of Anusha & Arsala</div>
+  </div>
+
+  <div class="scroll-hint">
+    <div>scroll down</div>
+    <div style="font-size:1.5rem;margin-top:5px;">↓</div>
+  </div>
+</section>
+
+<!-- BUNTING -->
+<div class="bunting-section">
+  <div class="garland-border" style="background:#C8215A;color:#FFD700;font-family:'Dancing Script',cursive;font-size:1rem;padding:8px;">
+    🌸 &nbsp; خوش آمدید &nbsp; 🌸 &nbsp; Welcome &nbsp; 🌸 &nbsp; Mehndi Mubarak &nbsp; 🌸 &nbsp; شادی مبارک &nbsp; 🌸
+  </div>
+  <div class="bunting-row">
+    <script>
+      // We'll generate these via JS below
+    </script>
+  </div>
+  <div class="garland-border" style="background:#2D5A27;color:#FFD700;font-family:'Dancing Script',cursive;font-size:1rem;padding:8px;">
+    🌿 &nbsp; 27th June 2026 &nbsp; 🌿 &nbsp; An Evening of Mehndi, Music & Mogras &nbsp; 🌿 &nbsp; 27th June 2026 &nbsp; 🌿
+  </div>
+</div>
+
+<!-- ===== COUNTDOWN ===== -->
+<section id="countdown">
+  <!-- Sparkles -->
+  <div class="sparkle" style="top:20%;left:15%;animation-delay:0s;"></div>
+  <div class="sparkle" style="top:50%;left:5%;animation-delay:0.5s;"></div>
+  <div class="sparkle" style="top:30%;right:10%;animation-delay:1s;"></div>
+  <div class="sparkle" style="top:70%;right:20%;animation-delay:1.5s;"></div>
+  <div class="sparkle" style="top:80%;left:30%;animation-delay:0.8s;"></div>
+
+  <div class="reveal">
+    <div class="countdown-title">✨ Counting down to the magic ✨</div>
+    <div class="countdown-subtitle">27th June 2026 — Mehndi Night</div>
+    <div class="countdown-grid">
+      <div class="count-card">
+        <span class="count-num" id="cd-days">--</span>
+        <div class="count-label">Days</div>
+      </div>
+      <div class="count-card">
+        <span class="count-num" id="cd-hours">--</span>
+        <div class="count-label">Hours</div>
+      </div>
+      <div class="count-card">
+        <span class="count-num" id="cd-mins">--</span>
+        <div class="count-label">Minutes</div>
+      </div>
+      <div class="count-card">
+        <span class="count-num" id="cd-secs">--</span>
+        <div class="count-label">Seconds</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EVENT DETAILS ===== -->
+<section id="event-details" class="mehndi-bg">
+  <div class="sec-header reveal">
+    <span class="sec-eyebrow">~ You're Invited ~</span>
+    <h2 class="sec-title">Event Details</h2>
+  </div>
+
+  <div class="event-cards">
+    <!-- Dholki Card -->
+    <div class="event-card reveal-left">
+      <div class="card-top" style="background:linear-gradient(90deg,#C8215A,#F4A200,#C8215A);"></div>
+      <div class="card-body">
+        <span class="card-icon">🥁</span>
+        <div class="card-event-name">Pre-celebration</div>
+        <div class="card-title">Dholki Night</div>
+        <div class="card-detail">
+          <div class="card-detail-icon">📅</div>
+          <div><strong>Date</strong>25th June 2026, Thursday</div>
+        </div>
+        <div class="card-detail">
+          <div class="card-detail-icon">⏰</div>
+          <div><strong>Time</strong>8:00 PM onwards</div>
+        </div>
+        <div class="card-detail">
+          <div class="card-detail-icon">👗</div>
+          <div><strong>Attire</strong>Colourful desi — the more vibrant the better!</div>
+        </div>
+        <div class="card-detail">
+          <div class="card-detail-icon">🌟</div>
+          <div><strong>Vibe</strong>Dhol, geet, and gup shup with the family</div>
+        </div>
+      </div>
+      <div class="card-pattern">🥁</div>
+    </div>
+
+    <!-- Mehndi Card -->
+    <div class="event-card reveal" style="transition-delay:0.2s;">
+      <div class="card-top" style="background:linear-gradient(90deg,#2D5A27,#D4AF37,#2D5A27);"></div>
+      <div class="card-body">
+        <span class="card-icon">🌿</span>
+        <div class="card-event-name">The Main Event</div>
+        <div class="card-title">Mehndi Night</div>
+        <div class="card-detail">
+          <div class="card-detail-icon">📅</div>
+          <div><strong>Date</strong>27th June 2026, Saturday</div>
+        </div>
+        <div class="card-detail">
+          <div class="card-detail-icon">⏰</div>
+          <div><strong>Time</strong>6:00 PM — Midnight</div>
+        </div>
+        <div class="card-detail">
+          <div class="card-detail-icon">👗</div>
+          <div><strong>Attire</strong>Mustard, green, saffron & pink — classic 90s desi glam!</div>
+        </div>
+        <div class="card-detail">
+          <div class="card-detail-icon">🌟</div>
+          <div><strong>Vibe</strong>Mehndi, music, mogras & memories ✨</div>
+        </div>
+      </div>
+      <div class="card-pattern">🌿</div>
+    </div>
+
+    <!-- Baraat Card -->
+    <div class="event-card reveal-right">
+      <div class="card-top" style="background:linear-gradient(90deg,#D4AF37,#C8215A,#D4AF37);"></div>
+      <div class="card-body">
+        <span class="card-icon">🎊</span>
+        <div class="card-event-name">The Grand Finale</div>
+        <div class="card-title">Baraat & Walima</div>
+        <div class="card-detail">
+          <div class="card-detail-icon">📅</div>
+          <div><strong>Date</strong>29th June 2026, Monday</div>
+        </div>
+        <div class="card-detail">
+          <div class="card-detail-icon">⏰</div>
+          <div><strong>Time</strong>7:00 PM onwards</div>
+        </div>
+        <div class="card-detail">
+          <div class="card-detail-icon">👗</div>
+          <div><strong>Attire</strong>Formal — lehengas, sherwanis & your finest threads</div>
+        </div>
+        <div class="card-detail">
+          <div class="card-detail-icon">🌟</div>
+          <div><strong>Vibe</strong>Grand celebrations, dinner & dance floor!</div>
+        </div>
+      </div>
+      <div class="card-pattern">🎊</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DRESS CODE ===== -->
+<section id="dress-code">
+  <div class="sec-header reveal">
+    <span class="sec-eyebrow">~ Dress to Impress ~</span>
+    <h2 class="sec-title" style="color:var(--cream);">90s Mehndi Palette</h2>
+  </div>
+  <div class="palette-row reveal">
+    <div class="palette-chip">
+      <div class="chip-swatch" style="background:#F4A200;"></div>
+      <div class="chip-name">Saffron</div>
+    </div>
+    <div class="palette-chip">
+      <div class="chip-swatch" style="background:#FFB800;"></div>
+      <div class="chip-name">Marigold</div>
+    </div>
+    <div class="palette-chip">
+      <div class="chip-swatch" style="background:#2D5A27;"></div>
+      <div class="chip-name">Mehendi Green</div>
+    </div>
+    <div class="palette-chip">
+      <div class="chip-swatch" style="background:#C8215A;"></div>
+      <div class="chip-name">Rani Pink</div>
+    </div>
+    <div class="palette-chip">
+      <div class="chip-swatch" style="background:#B5202A;"></div>
+      <div class="chip-name">Ruby Red</div>
+    </div>
+    <div class="palette-chip">
+      <div class="chip-swatch" style="background:#D4AF37;"></div>
+      <div class="chip-name">Pure Gold</div>
+    </div>
+  </div>
+  <p class="dress-note reveal" style="transition-delay:0.3s;">
+    Channel your inner 90s desi royalty 🌸 Think bright kurtas, mirror-work dupattas, chunky bangles and kohl-lined eyes. The more colour, the more barkat!
+  </p>
+</section>
+
+<!-- ===== LOCATION ===== -->
+<section id="location">
+  <div class="sec-header reveal">
+    <span class="sec-eyebrow">~ Find Your Way ~</span>
+    <h2 class="sec-title">Venue</h2>
+  </div>
+  <div class="location-wrap">
+    <div class="location-info reveal-left">
+      <h3>🏛️ Gulshan-e-Celebrations</h3>
+      <p>
+        <strong style="color:var(--green);">Mehndi Venue</strong><br>
+        Plot 47, Garden Avenue<br>
+        Block 6, Gulshan-e-Iqbal<br>
+        Karachi, Pakistan
+      </p>
+      <p style="color:#888;font-size:0.9rem;">
+        Parking available on-site. Shuttle service from the main gate every 20 minutes.
+      </p>
+      <a href="https://maps.google.com" target="_blank" class="loc-btn">
+        📍 Open in Google Maps
+      </a>
+    </div>
+    <div class="map-placeholder reveal-right">
+      <!-- Animated decorative map -->
+      <svg width="100%" height="100%" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;">
+        <rect width="300" height="300" fill="#f0f7ee"/>
+        <!-- Streets -->
+        <rect x="0" y="130" width="300" height="12" fill="#e0d5c0" rx="2"/>
+        <rect x="0" y="180" width="300" height="8" fill="#e8ddc8" rx="2"/>
+        <rect x="130" y="0" width="12" height="300" fill="#e0d5c0" rx="2"/>
+        <rect x="200" y="0" width="8" height="300" fill="#e8ddc8" rx="2"/>
+        <!-- Blocks -->
+        <rect x="10" y="10" width="110" height="110" fill="#d4e8d0" rx="8" opacity="0.6"/>
+        <rect x="150" y="10" width="140" height="110" fill="#dde8d4" rx="8" opacity="0.6"/>
+        <rect x="10" y="150" width="110" height="140" fill="#dde8d4" rx="8" opacity="0.6"/>
+        <rect x="150" y="150" width="110" height="80" fill="#c8e0c4" rx="8" opacity="0.6"/>
+        <!-- Venue block -->
+        <rect x="150" y="150" width="110" height="80" fill="#4A8A3F" rx="8" opacity="0.8"/>
+        <text x="205" y="196" text-anchor="middle" fill="white" font-size="9" font-family="Lato,sans-serif" font-weight="bold">VENUE</text>
+        <!-- Decorative trees -->
+        <text x="65" y="70" text-anchor="middle" font-size="16">🌳</text>
+        <text x="225" y="70" text-anchor="middle" font-size="16">🌳</text>
+        <text x="65" y="230" text-anchor="middle" font-size="16">🌿</text>
+      </svg>
+      <!-- Animated pin -->
+      <div class="map-pin-anim" style="position:absolute;top:37%;left:65%;transform:translate(-50%,-100%)">📍</div>
+      <div class="map-label" style="position:absolute;bottom:20px;width:100%;text-align:center;">Gulshan-e-Iqbal, Karachi</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CLOSING ===== -->
+<section id="closing">
+  <!-- Decorative mehndi motifs -->
+  <div style="font-size:3rem;opacity:0.08;position:absolute;top:20px;left:20px;transform:rotate(-15deg)">🌸</div>
+  <div style="font-size:4rem;opacity:0.08;position:absolute;top:50%;right:20px;transform:translateY(-50%) rotate(15deg)">🌿</div>
+  <div style="font-size:3rem;opacity:0.08;position:absolute;bottom:40px;left:50px;transform:rotate(10deg)">✨</div>
+
+  <div class="reveal">
+    <div class="closing-title">شادی مبارک ✨</div>
+    <div class="closing-msg">
+      With hearts full of joy and hands full of mehndi, we welcome you to share in the celebration of our most special night. Come, dance, and make memories with us.
+    </div>
+    <div style="font-size:3rem;margin:20px 0;animation:bride-float 3s ease-in-out infinite;">💐</div>
+    <div class="rsvp-note">
+      RSVP: Please confirm your presence by 20th June 2026<br>
+      <span style="color:var(--saffron);font-family:'Dancing Script',cursive;font-size:1.3rem;margin-top:10px;display:block;">
+        — With love, The Families 🌸
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  🌿 Made with love & mehndi 🌿 &nbsp; | &nbsp; Anusha & Arsala 2026
+</footer>
+
+<script>
+  // ===== LOADER =====
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hide');
+      // Trigger jhoomer drop
+      setTimeout(() => {
+        document.getElementById('jhoomer-wrap').classList.add('animate');
+        // Show bride
+        setTimeout(() => {
+          document.getElementById('bride-sticker').classList.add('show');
+          document.getElementById('hero-text').classList.add('show');
+        }, 800);
+      }, 300);
+    }, 1200);
+  });
+
+  // ===== FALLING PETALS =====
+  const petals = ['🌸', '🌼', '✨', '🌺', '💛', '🌿', '⭐', '🌻'];
+  const particleContainer = document.getElementById('particles');
+  function createPetal() {
+    const p = document.createElement('span');
+    p.className = 'petal';
+    p.textContent = petals[Math.floor(Math.random() * petals.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+    p.style.animationDelay = Math.random() * 5 + 's';
+    p.style.fontSize = (Math.random() * 0.8 + 0.6) + 'rem';
+    particleContainer.appendChild(p);
+    setTimeout(() => p.remove(), 15000);
+  }
+  setInterval(createPetal, 600);
+  // Initial burst
+  for (let i = 0; i < 10; i++) setTimeout(createPetal, i * 150);
+
+  // ===== BUNTING =====
+  const buntingColors = ['#F4A200','#C8215A','#2D5A27','#FFB800','#B5202A','#D4AF37','#1A7A6E','#FF6B6B'];
+  const buntingRow = document.querySelector('.bunting-row');
+  for (let i = 0; i < 40; i++) {
+    const flag = document.createElement('div');
+    flag.className = 'bunting-flag';
+    flag.style.borderTopColor = buntingColors[i % buntingColors.length];
+    flag.style.animationDelay = (i * 0.05) + 's';
+    buntingRow.appendChild(flag);
+  }
+
+  // ===== COUNTDOWN =====
+  function updateCountdown() {
+    const target = new Date('2026-06-27T18:00:00');
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent = '0';
+      document.getElementById('cd-hours').textContent = '0';
+      document.getElementById('cd-mins').textContent = '0';
+      document.getElementById('cd-secs').textContent = '0';
+      return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+    document.getElementById('cd-days').textContent = String(days).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
+    document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ===== SCROLL REVEAL =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+    observer.observe(el);
+  });
+
+  // ===== SPARKLE ON HOVER =====
+  document.querySelectorAll('.event-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const spark = document.createElement('div');
+      spark.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:6px;height:6px;background:#D4AF37;border-radius:50%;pointer-events:none;animation:sparkle-anim 0.6s ease forwards;`;
+      card.style.position = 'relative';
+      card.appendChild(spark);
+      setTimeout(() => spark.remove(), 600);
+    });
+  });
+
+  // ===== PALETTE CHIP TILT =====
+  document.querySelectorAll('.palette-chip').forEach(chip => {
+    chip.addEventListener('mousemove', e => {
+      const rect = chip.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width/2) / rect.width;
+      const y = (e.clientY - rect.top - rect.height/2) / rect.height;
+      chip.style.transform = `scale(1.1) rotateY(${x*20}deg) rotateX(${-y*20}deg) translateY(-5px)`;
+    });
+    chip.addEventListener('mouseleave', () => {
+      chip.style.transform = '';
+    });
+  });
+
+    // ===== BACKGROUND MUSIC: autoplay with fallback =====
+    (function(){
+      const bgMusic = document.getElementById('bg-music');
+      const musicToggle = document.getElementById('music-toggle');
+      if (!bgMusic || !musicToggle) return;
+      bgMusic.volume = 0.6;
+
+      function showPlay() {
+        musicToggle.style.display = 'block';
+        musicToggle.textContent = '▶';
+      }
+
+      function showPause() {
+        musicToggle.style.display = 'block';
+        musicToggle.textContent = '⏸';
+      }
+
+      // Try autoplay on load
+      window.addEventListener('load', () => {
+        const p = bgMusic.play();
+        if (p !== undefined) {
+          p.then(() => {
+            // autoplay succeeded
+            musicToggle.style.display = 'none';
+          }).catch(() => {
+            // autoplay blocked -> show play button
+            showPlay();
+          });
+        }
+      });
+
+      musicToggle.addEventListener('click', () => {
+        if (bgMusic.paused) {
+          bgMusic.play().then(() => { showPause(); }).catch(() => {});
+        } else {
+          bgMusic.pause();
+          showPlay();
+        }
+      });
+    })();
+</script>
+</body>
+</html>
