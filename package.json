@@ -1,0 +1,8 @@
+{
+  "name": "wedding-private",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "echo 'No build step; deploying static files'"
+  }
+}

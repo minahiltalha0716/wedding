@@ -1,0 +1,24 @@
+:root{
+  --accent-red: #7b1414;
+  --accent-gold: #caa43a;
+  --accent-black: #0b0b0b;
+  --off-white: #f8f3ef;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,Helvetica,Arial,sans-serif;background:var(--off-white);color:var(--accent-black);line-height:1.4}
+.container{max-width:1000px;margin:0 auto;padding:2rem}
+.site-header{padding:1.5rem 0;text-align:center}
+.site-title{font-size:1.6rem;color:var(--accent-red)}
+.subtitle{color:#333;margin-top:.25rem}
+.hero{min-height:60vh;background-color:var(--accent-gold);background-image:url('/images/couple.png');background-size:cover;background-position:center;display:flex;align-items:center}
+.hero .overlay{background:linear-gradient(rgba(8,8,8,0.35),rgba(8,8,8,0.15));width:100%}
+.hero-content{padding:6rem 2rem;color:white;text-align:center}
+.hero h2{font-size:2.4rem;letter-spacing:1px}
+.hero .date{margin-top:.5rem;opacity:.95}
+.rsvp{display:inline-block;margin-top:1rem;padding:.6rem 1rem;background:var(--accent-red);color:var(--off-white);text-decoration:none;border-radius:6px}
+.rsvp:hover{opacity:.95}
+.rsvp-section{padding:3rem 0;text-align:center}
+.site-footer{padding:2rem 0;text-align:center;color:#666}
+
+/* Responsive */
+@media (max-width:600px){.hero-content{padding:4rem 1rem}.hero h2{font-size:1.6rem}}
