@@ -1220,30 +1220,42 @@
       function showPlay() {
         musicToggle.style.display = 'block';
         musicToggle.textContent = '▶';
+        musicToggle.setAttribute('aria-pressed','false');
       }
 
       function showPause() {
         musicToggle.style.display = 'block';
         musicToggle.textContent = '⏸';
+        musicToggle.setAttribute('aria-pressed','true');
       }
 
-      // Try autoplay on load
+      // Always show the toggle so user can unhide and play if needed
+      showPlay();
+
+      // Try autoplay on load; if it succeeds, hide the toggle
       window.addEventListener('load', () => {
-        const p = bgMusic.play();
-        if (p !== undefined) {
-          p.then(() => {
-            // autoplay succeeded
-            musicToggle.style.display = 'none';
-          }).catch(() => {
-            // autoplay blocked -> show play button
+        try {
+          const p = bgMusic.play();
+          if (p && typeof p.then === 'function') {
+            p.then(() => {
+              musicToggle.style.display = 'none';
+            }).catch(() => {
+              // autoplay blocked -> leave toggle visible
+              showPlay();
+            });
+          } else {
+            // play() did not return a promise (older browsers) - assume it didn't autoplay
             showPlay();
-          });
+          }
+        } catch (err) {
+          // any sync error -> ensure toggle visible
+          showPlay();
         }
       });
 
       musicToggle.addEventListener('click', () => {
         if (bgMusic.paused) {
-          bgMusic.play().then(() => { showPause(); }).catch(() => {});
+          bgMusic.play().then(() => { showPause(); }).catch(() => { showPlay(); });
         } else {
           bgMusic.pause();
           showPlay();
