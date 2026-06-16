@@ -55,7 +55,7 @@ async function loadEncryptedImage(imageMeta, elementId) {
   }
 
   try {
-    const response = await fetch(imageMeta.enc);
+    const response = await fetch(`/assets/encrypted-images/${imageMeta.enc}`);
     if (!response.ok) throw new Error('Failed to fetch encrypted image');
 
     const encryptedBase64 = await response.text();
@@ -98,13 +98,15 @@ function setupAuthModal() {
 
   if (!ENCRYPTION_PASSWORD) {
     authModal.style.display = 'flex';
+  } else {
+    authModal.style.display = 'none';
   }
 }
 
 async function initializeGallery() {
   if (!ENCRYPTION_PASSWORD) return;
 
-  const manifestResponse = await fetch('assets/encrypted-images/manifest.json');
+  const manifestResponse = await fetch('/assets/encrypted-images/manifest.json');
   if (!manifestResponse.ok) return;
 
   const manifest = await manifestResponse.json();
