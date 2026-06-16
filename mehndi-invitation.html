@@ -643,7 +643,7 @@
 <body>
 
 <!-- BACKGROUND MUSIC -->
-<audio id="bg-music" src="assets/audio/music.mp3" loop preload="auto"></audio>
+<audio id="bg-music" src="assets/audio/music.mp3" loop preload="auto" autoplay muted playsinline></audio>
 <button id="music-toggle" aria-label="Play music" style="position:fixed;left:16px;bottom:16px;z-index:9999;background:rgba(212,175,55,0.95);border:none;padding:10px 14px;border-radius:999px;font-family:'Dancing Script',cursive;font-size:1rem;display:none;">♫</button>
 
 <!-- LOADER -->
@@ -1210,51 +1210,79 @@
     });
   });
 
-    // ===== BACKGROUND MUSIC: autoplay with fallback =====
+    // ===== BACKGROUND MUSIC: muted autoplay then attempt unmute =====
     (function(){
       const bgMusic = document.getElementById('bg-music');
       const musicToggle = document.getElementById('music-toggle');
       if (!bgMusic || !musicToggle) return;
-      bgMusic.volume = 0.6;
+
+      // Start muted and autoplay (attribute set). We'll try to unmute automatically.
+      bgMusic.volume = 0.0001;
+      bgMusic.muted = true;
 
       function showPlay() {
         musicToggle.style.display = 'block';
         musicToggle.textContent = '▶';
         musicToggle.setAttribute('aria-pressed','false');
       }
-
       function showPause() {
         musicToggle.style.display = 'block';
         musicToggle.textContent = '⏸';
         musicToggle.setAttribute('aria-pressed','true');
       }
 
-      // Always show the toggle so user can unhide and play if needed
       showPlay();
 
-      // Try autoplay on load; if it succeeds, hide the toggle
-      window.addEventListener('load', () => {
+      // Attempt to unmute automatically. Many browsers block unmute without user gesture,
+      // but some allow unmuting when the page is visible or after short delay.
+      let attempts = 0;
+      const maxAttempts = 12;
+      const attemptUnmute = () => {
+        attempts++;
         try {
+          bgMusic.muted = false;
+          bgMusic.volume = 0.0;
           const p = bgMusic.play();
           if (p && typeof p.then === 'function') {
             p.then(() => {
-              musicToggle.style.display = 'none';
+              // Gradually fade in volume
+              let vol = 0.0;
+              const fade = setInterval(() => {
+                vol = Math.min(0.6, vol + 0.05);
+                bgMusic.volume = vol;
+                if (vol >= 0.6) { clearInterval(fade); musicToggle.style.display = 'none'; showPause(); }
+              }, 150);
             }).catch(() => {
-              // autoplay blocked -> leave toggle visible
-              showPlay();
+              // couldn't unmute/play now
+              bgMusic.muted = true;
             });
           } else {
-            // play() did not return a promise (older browsers) - assume it didn't autoplay
-            showPlay();
+            // older browsers - stop attempts
+            bgMusic.muted = true;
           }
         } catch (err) {
-          // any sync error -> ensure toggle visible
-          showPlay();
+          bgMusic.muted = true;
         }
-      });
+
+        if (attempts < maxAttempts) setTimeout(attemptUnmute, 1000);
+      };
+
+      // Start attempts shortly after load
+      window.addEventListener('load', () => setTimeout(attemptUnmute, 600));
+
+      // Also try when page becomes visible or gains focus
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) attemptUnmute(); });
+      window.addEventListener('focus', attemptUnmute);
+
+      // If user interacts (scroll/touch/keydown), unmute immediately
+      const userAct = () => { attemptUnmute(); document.removeEventListener('scroll', userAct); document.removeEventListener('touchstart', userAct); document.removeEventListener('keydown', userAct); };
+      document.addEventListener('scroll', userAct, {passive:true});
+      document.addEventListener('touchstart', userAct, {passive:true});
+      document.addEventListener('keydown', userAct);
 
       musicToggle.addEventListener('click', () => {
         if (bgMusic.paused) {
+          bgMusic.muted = false;
           bgMusic.play().then(() => { showPause(); }).catch(() => { showPlay(); });
         } else {
           bgMusic.pause();
