@@ -70,9 +70,9 @@
   #hero {
     position: relative;
     min-height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2), #1a0a05), url('assets/images/hero-banner-decor-idea-1.jpeg');
+    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.70), rgba(0,0,0,0.7)), url('assets/images/hero-banner-decor-idea-2.jpeg');
     background-size: cover;
-    background-position: center;
+    background-position: top;
     display: flex; align-items: center; justify-content: center;
     flex-direction: column;
     overflow: hidden;
@@ -127,8 +127,8 @@
     z-index: 5;
     margin-top: 80px;
     opacity: 0;
-    transform: translateY(40px) scale(0.8);
-    transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /*transform: translateY(40px) scale(0.8);
+    transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);*/
   }
   #bride-sticker.show {
     opacity: 1;
@@ -139,10 +139,7 @@
     height: 280px;
     object-fit: cover;
     border-radius: 50%;
-    border: 6px solid var(--gold);
-    filter: drop-shadow(0 0 25px rgba(212,175,55,0.6));
     animation: bride-float 3s ease-in-out infinite;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
   }
   @keyframes bride-float {
     0%, 100% { transform: translateY(0); }
@@ -164,7 +161,7 @@
   }
   .hero-urdu {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(2.5rem, 20vw, 5rem);
     color: var(--gold);
     text-shadow: 0 0 20px rgba(212,175,55,0.8), 2px 2px 4px rgba(0,0,0,0.5);
     letter-spacing: 0.05em;
@@ -302,7 +299,7 @@
 
   /* ---- COUNTDOWN SECTION ---- */
   #countdown {
-    background: linear-gradient(135deg, #1a0a05 0%, #2D1800 50%, #1a0a05 100%);
+    background: linear-gradient(#c8215a 0%, #c8215a 50%, #1a0a05 100%);
     padding: 80px 20px;
     text-align: center;
     position: relative;
@@ -323,7 +320,7 @@
   }
   .countdown-subtitle {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
+    font-size: 3.1rem;
     color: var(--deep-cream);
     margin-bottom: 50px;
     opacity: 0.8;
@@ -590,7 +587,7 @@
   /* ---- CLOSING ---- */
   #closing {
     padding: 100px 20px;
-    background: linear-gradient(135deg, #1a0a05 0%, #2D1800 100%);
+    background: linear-gradient(#c8215a 0%, #c8215a 50%, #c8215a 100%);
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -604,9 +601,9 @@
   }
   .closing-msg {
     font-family: 'Dancing Script', cursive;
-    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-size: clamp(1.2rem, 4.5vw, 1.8rem);
     color: var(--cream);
-    opacity: 0.9;
+    opacity: 1;
     max-width: 600px;
     margin: 0 auto 40px;
     line-height: 1.6;
@@ -616,6 +613,195 @@
     font-size: 1rem;
     color: rgba(253,243,227,0.6);
     letter-spacing: 0.1em;
+    margin-bottom: 18px;
+  }
+  .rsvp-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    background: rgba(212,175,55,0.95);
+    color: #0d0600;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 0 16px 35px rgba(0,0,0,0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .rsvp-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+  }
+
+  /* ---- DHOLKI PROGRAM CARD ---- */
+  .dholki-card-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .dholki-program-card {
+    background: #D4A017;
+    background-image:
+      radial-gradient(ellipse at 30% 20%, #E8B820 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 80%, #B8860B 0%, transparent 55%);
+    border-radius: 12px;
+    overflow: visible;
+    position: relative;
+    box-shadow:
+      0 0 0 4px #B8860B,
+      0 0 0 8px #8B6400,
+      0 15px 50px rgba(0,0,0,0.35);
+  }
+
+  /* Hanging garlands across top */
+  .dholki-garlands {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    position: absolute;
+    top: -2px;
+    left: 0; right: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .garland-strand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .garland-leaf {
+    width: 6px; height: 10px;
+    background: #2D5A27;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    margin: 1px 0;
+    opacity: 0.9;
+  }
+  .garland-leaf:nth-child(odd) { background: #4A8A3F; transform: rotate(-15deg); }
+  .garland-leaf:nth-child(even) { background: #2D5A27; transform: rotate(15deg); }
+  .garland-flower {
+    width: 10px; height: 10px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px #FFF5E0;
+    margin: 2px 0;
+  }
+  .garland-tassel {
+    width: 14px; height: 24px;
+    background: linear-gradient(180deg, #D4AF37 0%, #B8860B 60%, #8B6400 100%);
+    border-radius: 0 0 50% 50%;
+    position: relative;
+    margin-top: 2px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+  .garland-tassel::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; left: 50%;
+    transform: translateX(-50%);
+    width: 4px; height: 8px;
+    background: #D4AF37;
+    border-radius: 0 0 50% 50%;
+  }
+
+  /* Side rosette decorations */
+  .dholki-rosettes {
+    position: absolute;
+    top: 0; bottom: 0; left: -22px;
+    width: 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .dholki-rosettes.right { left: auto; right: -22px; }
+  .rosette {
+    width: 44px; height: 44px;
+    position: relative;
+  }
+  .rosette svg { width: 100%; height: 100%; }
+
+  /* Women exclusive side text */
+  .women-exclusive-text {
+    position: absolute;
+    top: 50%; left: -14px;
+    transform: translateY(-50%) rotate(-90deg);
+    font-family: 'Lato', sans-serif;
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 6;
+  }
+  .women-exclusive-text.right { left: auto; right: -14px; transform: translateY(-50%) rotate(90deg); }
+
+  /* Arch panel */
+  .dholki-arch {
+    background: #E8C96A;
+    background-image: radial-gradient(ellipse at 50% 30%, #F2D878 0%, #C9A820 100%);
+    margin: 60px 28px 28px;
+    border-radius: 50% 50% 8px 8px / 25% 25% 8px 8px;
+    padding: 30px 45px 42px;
+    position: relative;
+    box-shadow: inset 0 -4px 12px rgba(0,0,0,0.15), 0 4px 15px rgba(0,0,0,0.2);
+  }
+
+  .dholki-program-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.6rem;
+    color: #C8215A;
+    text-align: center;
+    margin-bottom: 24px;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.4);
+  }
+
+  .program-schedule {
+    list-style: none;
+    padding: 0; margin: 0;
+  }
+  .program-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(139,100,0,0.15);
+  }
+  .program-row:last-child { border-bottom: none; }
+  .prog-time {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #5A3A00;
+    white-space: nowrap;
+    min-width: 78px;
+    letter-spacing: 0.03em;
+  }
+  .prog-event {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 0.97rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #3A1F00;
+    line-height: 1.35;
+  }
+  .prog-event.women-only { color: #C8215A; }
+
+  .prog-divider {
+    width: 1px;
+    height: 100%;
+    min-height: 14px;
+    background: #8B6400;
+    opacity: 0.4;
+    flex-shrink: 0;
   }
 
   /* ---- BRIDE PORTRAIT ---- */
@@ -642,6 +828,23 @@
     width: 100%;
     display: block;
     border: 1px solid #ddd;
+  }
+  .portrait-overlay-text {
+    position: relative;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    color: #c8215a;
+    text-shadow: 0 0 10px rgba(0,0,0,0.2);
+    animation: float-text 3.5s ease-in-out infinite;
+    letter-spacing: 0.02em;
+  }
+  @keyframes float-text {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-8px); }
   }
   .portrait-caption {
     font-family: 'Dancing Script', cursive;
@@ -694,7 +897,7 @@
 <body>
 
 <!-- BACKGROUND MUSIC -->
-<audio id="bg-music" src="assets/audio/music.mp3" loop preload="auto" autoplay muted playsinline></audio>
+<audio id="bg-music" src="assets/audio/NaziaHassan.mp3" loop preload="auto" autoplay muted playsinline></audio>
 <button id="music-toggle" aria-label="Play music" style="position:fixed;left:16px;bottom:16px;z-index:9999;background:rgba(212,175,55,0.95);border:none;padding:10px 14px;border-radius:999px;font-family:'Dancing Script',cursive;font-size:1rem;display:none;">♫</button>
 
 <!-- LOADER -->
@@ -749,119 +952,6 @@
   <!-- Jhoomer (chandelier) -->
   <div id="jhoomer-wrap">
     <svg class="jhoomer-svg" viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#FFD700"/>
-          <stop offset="50%" stop-color="#D4AF37"/>
-          <stop offset="100%" stop-color="#B8860B"/>
-        </linearGradient>
-        <linearGradient id="rubyGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#FF6B6B"/>
-          <stop offset="100%" stop-color="#C8215A"/>
-        </linearGradient>
-        <linearGradient id="emeraldGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#4CAF50"/>
-          <stop offset="100%" stop-color="#2D5A27"/>
-        </linearGradient>
-      </defs>
-
-      <!-- Chain from top -->
-      <line x1="110" y1="0" x2="110" y2="40" stroke="url(#goldGrad)" stroke-width="3"/>
-      <circle cx="110" cy="10" r="4" fill="url(#goldGrad)"/>
-      <circle cx="110" cy="20" r="3" fill="url(#goldGrad)"/>
-      <circle cx="110" cy="30" r="4" fill="url(#goldGrad)"/>
-
-      <!-- Main body - top dome -->
-      <ellipse cx="110" cy="58" rx="35" ry="18" fill="url(#goldGrad)" opacity="0.9"/>
-      <ellipse cx="110" cy="55" rx="28" ry="12" fill="#FFE566" opacity="0.4"/>
-
-      <!-- Decorative ring -->
-      <ellipse cx="110" cy="58" rx="35" ry="5" fill="none" stroke="#D4AF37" stroke-width="2"/>
-
-      <!-- Arms (5 arms spreading out) -->
-      <!-- Center arm -->
-      <line x1="110" y1="70" x2="110" y2="95" stroke="url(#goldGrad)" stroke-width="3"/>
-
-      <!-- Left arm 1 -->
-      <path d="M110,75 Q85,78 70,90" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
-      <!-- Left arm 2 -->
-      <path d="M110,75 Q55,80 35,95" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
-
-      <!-- Right arm 1 -->
-      <path d="M110,75 Q135,78 150,90" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
-      <!-- Right arm 2 -->
-      <path d="M110,75 Q165,80 185,95" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
-
-      <!-- Hanging chains from arms -->
-      <!-- Far left -->
-      <line x1="35" y1="95" x2="35" y2="130" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3,2"/>
-      <!-- Near left -->
-      <line x1="70" y1="90" x2="68" y2="125" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3,2"/>
-      <!-- Center -->
-      <line x1="110" y1="95" x2="110" y2="135" stroke="#D4AF37" stroke-width="2" stroke-dasharray="3,2"/>
-      <!-- Near right -->
-      <line x1="150" y1="90" x2="152" y2="125" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3,2"/>
-      <!-- Far right -->
-      <line x1="185" y1="95" x2="185" y2="130" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3,2"/>
-
-      <!-- Main center lamp -->
-      <ellipse cx="110" cy="120" rx="18" ry="22" fill="url(#rubyGrad)" opacity="0.9"/>
-      <ellipse cx="110" cy="112" rx="12" ry="8" fill="#FFB3B3" opacity="0.4"/>
-      <!-- lamp glow -->
-      <circle cx="110" cy="120" r="22" fill="#FF6B6B" opacity="0.1">
-        <animate attributeName="r" values="22;28;22" dur="2s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.1;0.2;0.1" dur="2s" repeatCount="indefinite"/>
-      </circle>
-
-      <!-- Side decorative gems -->
-      <!-- Far left gems -->
-      <ellipse cx="35" cy="138" rx="9" ry="13" fill="url(#emeraldGrad)" opacity="0.9"/>
-      <ellipse cx="35" cy="133" rx="6" ry="5" fill="#A5D6A7" opacity="0.4"/>
-      <!-- Hanging droplet far left -->
-      <ellipse cx="35" cy="155" rx="5" ry="9" fill="url(#rubyGrad)" opacity="0.9"/>
-      <line x1="35" y1="151" x2="35" y2="155" stroke="#D4AF37" stroke-width="1"/>
-
-      <!-- Near left gems -->
-      <ellipse cx="68" cy="133" rx="8" ry="11" fill="url(#rubyGrad)" opacity="0.9"/>
-      <ellipse cx="68" cy="128" rx="5" ry="4" fill="#FFB3B3" opacity="0.4"/>
-      <ellipse cx="68" cy="148" rx="4" ry="7" fill="url(#goldGrad)" opacity="0.9"/>
-      <line x1="68" y1="144" x2="68" y2="148" stroke="#D4AF37" stroke-width="1"/>
-
-      <!-- Center lamp bottom -->
-      <ellipse cx="110" cy="145" rx="6" ry="4" fill="#D4AF37"/>
-      <line x1="110" y1="149" x2="110" y2="165" stroke="#D4AF37" stroke-width="2"/>
-      <ellipse cx="110" cy="170" rx="8" ry="12" fill="url(#goldGrad)" opacity="0.9"/>
-      <ellipse cx="110" cy="164" rx="5" ry="4" fill="#FFE566" opacity="0.4"/>
-
-      <!-- Near right gems -->
-      <ellipse cx="152" cy="133" rx="8" ry="11" fill="url(#rubyGrad)" opacity="0.9"/>
-      <ellipse cx="152" cy="128" rx="5" ry="4" fill="#FFB3B3" opacity="0.4"/>
-      <ellipse cx="152" cy="148" rx="4" ry="7" fill="url(#goldGrad)" opacity="0.9"/>
-      <line x1="152" y1="144" x2="152" y2="148" stroke="#D4AF37" stroke-width="1"/>
-
-      <!-- Far right gems -->
-      <ellipse cx="185" cy="138" rx="9" ry="13" fill="url(#emeraldGrad)" opacity="0.9"/>
-      <ellipse cx="185" cy="133" rx="6" ry="5" fill="#A5D6A7" opacity="0.4"/>
-      <ellipse cx="185" cy="155" rx="5" ry="9" fill="url(#rubyGrad)" opacity="0.9"/>
-      <line x1="185" y1="151" x2="185" y2="155" stroke="#D4AF37" stroke-width="1"/>
-
-      <!-- Decorative chain loops bottom -->
-      <path d="M68,155 Q110,175 152,155" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.7"/>
-      <path d="M35,164 Q110,195 185,164" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
-
-      <!-- Bottom tassels/fringe from center -->
-      <line x1="95" y1="185" x2="88" y2="215" stroke="#D4AF37" stroke-width="1.5"/>
-      <line x1="105" y1="187" x2="100" y2="220" stroke="#C8215A" stroke-width="1.5"/>
-      <line x1="110" y1="183" x2="110" y2="225" stroke="#D4AF37" stroke-width="2"/>
-      <line x1="115" y1="187" x2="120" y2="220" stroke="#C8215A" stroke-width="1.5"/>
-      <line x1="125" y1="185" x2="132" y2="215" stroke="#D4AF37" stroke-width="1.5"/>
-
-      <!-- Tassel ends -->
-      <ellipse cx="88" cy="218" rx="4" ry="6" fill="url(#rubyGrad)"/>
-      <ellipse cx="100" cy="223" rx="4" ry="6" fill="url(#emeraldGrad)"/>
-      <ellipse cx="110" cy="228" rx="5" ry="7" fill="url(#goldGrad)"/>
-      <ellipse cx="120" cy="223" rx="4" ry="6" fill="url(#emeraldGrad)"/>
-      <ellipse cx="132" cy="218" rx="4" ry="6" fill="url(#rubyGrad)"/>
 
       <!-- Sparkle dots around jhoomer -->
       <circle cx="55" cy="60" r="2" fill="#FFD700" opacity="0.8">
@@ -881,14 +971,14 @@
 
   <!-- Bride Sticker -->
   <div id="bride-sticker">
-    <img src="assets/images/bride.png" alt="The Bride">
+    <!--<img src="assets/images/bride.png" alt="The Bride">-->
   </div>
 
   <!-- Hero Text -->
   <div class="hero-title-wrap" id="hero-text">
-    <div class="hero-urdu">مہندی مبارک</div>
-    <div class="hero-subtitle">You are warmly invited to celebrate</div>
-    <div class="hero-names">The Mehndi + Dholki of Minahil and Talhs</div>
+    <div class="hero-urdu">شادی مبارک</div>
+    <div class="hero-subtitle">You are cordially invited to celebrate</div>
+    <div class="hero-names">Minahil's 90's themed Mehndi</div>
   </div>
 
   <div class="scroll-hint">
@@ -922,8 +1012,8 @@
   <div class="sparkle" style="top:80%;left:30%;animation-delay:0.8s;"></div>
 
   <div class="reveal">
-    <div class="countdown-title">✨ Counting down to the magic ✨</div>
-    <div class="countdown-subtitle">27th June 2026 — Mehndi Night</div>
+    <div class="countdown-title">✨ Counting down to the fun filled night ✨</div>
+    <div class="countdown-subtitle">27th June 2026</div>
     <div class="countdown-grid">
       <div class="count-card">
         <span class="count-num" id="cd-days">--</span>
@@ -954,6 +1044,7 @@
   <div class="portrait-container reveal">
     <div class="portrait-frame-deco" style="top:-30px; left:-30px; font-size:4rem; transform:rotate(-15deg);">🌸</div>
     <div class="portrait-frame-deco" style="bottom:-30px; right:-30px; font-size:4rem; transform:rotate(15deg);">🌿</div>
+    <div class="portrait-overlay-text">BANNO CHALI SASURAL</div>
     <img src="assets/images/bride3.jpeg" alt="Minahil">
     <div class="portrait-caption">Minahil</div>
   </div>
@@ -967,85 +1058,185 @@
   </div>
 
   <div class="event-cards">
-    <!-- Dholki Card -->
-    <div class="event-card reveal-left">
-      <div class="card-top" style="background:linear-gradient(90deg,#C8215A,#F4A200,#C8215A);"></div>
-      <div class="card-body">
-        <img src="assets/images/images (5).jfif" class="card-icon" alt="Dholki">
-        <div class="card-event-name">Pre-celebration</div>
-        <div class="card-title">Dholki Night</div>
-        <div class="card-detail">
-          <div class="card-detail-icon">📅</div>
-          <div><strong>Date</strong>25th June 2026, Thursday</div>
-        </div>
-        <div class="card-detail">
-          <div class="card-detail-icon">⏰</div>
-          <div><strong>Time</strong>8:00 PM onwards</div>
-        </div>
-        <div class="card-detail">
-          <div class="card-detail-icon">👗</div>
-          <div><strong>Attire</strong>Colourful desi — the more vibrant the better!</div>
-        </div>
-        <div class="card-detail">
-          <div class="card-detail-icon">🌟</div>
-          <div><strong>Vibe</strong>Dhol, geet, and gup shup with the family</div>
-        </div>
-      </div>
-      <img src="assets/images/images (5).jfif" class="card-pattern" alt="Dholki pattern">
-    </div>
+    <!-- Dholki Program Card -->
+    <div class="dholki-card-wrap reveal-left">
+      <div class="dholki-program-card">
 
-    <!-- Mehndi Card -->
-    <div class="event-card reveal" style="transition-delay:0.2s;">
-      <div class="card-top" style="background:linear-gradient(90deg,#2D5A27,#D4AF37,#2D5A27);"></div>
-      <div class="card-body">
-        <span class="card-icon">🌿</span>
-        <div class="card-event-name">The Main Event</div>
-        <div class="card-title">Mehndi Night</div>
-        <div class="card-detail">
-          <div class="card-detail-icon">📅</div>
-          <div><strong>Date</strong>27th June 2026, Saturday</div>
+        <!-- Hanging garlands across top -->
+        <div class="dholki-garlands">
+          <!-- 7 garland strands -->
+          <div class="garland-strand">
+            <div class="garland-leaf"></div><div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-flower"></div>
+            <div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-tassel"></div>
+          </div>
+          <div class="garland-strand" style="margin-top:10px;">
+            <div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-flower" style="background:#FFB800;"></div>
+            <div class="garland-leaf"></div><div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-tassel" style="background:linear-gradient(180deg,#C8215A,#8B0026);"></div>
+          </div>
+          <div class="garland-strand">
+            <div class="garland-leaf"></div><div class="garland-leaf"></div><div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-flower" style="background:#FFE066;"></div>
+            <div class="garland-leaf"></div>
+            <div class="garland-tassel"></div>
+          </div>
+          <div class="garland-strand" style="margin-top:6px;">
+            <div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-flower"></div>
+            <div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-tassel" style="background:linear-gradient(180deg,#C8215A,#8B0026);"></div>
+          </div>
+          <div class="garland-strand">
+            <div class="garland-leaf"></div><div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-flower" style="background:#FFB800;"></div>
+            <div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-tassel"></div>
+          </div>
+          <div class="garland-strand" style="margin-top:12px;">
+            <div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-flower"></div>
+            <div class="garland-leaf"></div><div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-tassel" style="background:linear-gradient(180deg,#C8215A,#8B0026);"></div>
+          </div>
+          <div class="garland-strand">
+            <div class="garland-leaf"></div><div class="garland-leaf"></div><div class="garland-leaf"></div>
+            <div class="garland-flower" style="background:#FFE066;"></div>
+            <div class="garland-leaf"></div>
+            <div class="garland-tassel"></div>
+          </div>
         </div>
-        <div class="card-detail">
-          <div class="card-detail-icon">⏰</div>
-          <div><strong>Time</strong>6:00 PM — Midnight</div>
-        </div>
-        <div class="card-detail">
-          <div class="card-detail-icon">👗</div>
-          <div><strong>Attire</strong>Mustard, green, saffron & pink — classic 90s desi glam!</div>
-        </div>
-        <div class="card-detail">
-          <div class="card-detail-icon">🌟</div>
-          <div><strong>Vibe</strong>Mehndi, music, mogras & memories ✨</div>
-        </div>
-      </div>
-      <div class="card-pattern">🌿</div>
-    </div>
 
-    <!-- Baraat Card -->
-    <div class="event-card reveal-right">
-      <div class="card-top" style="background:linear-gradient(90deg,#D4AF37,#C8215A,#D4AF37);"></div>
-      <div class="card-body">
-        <span class="card-icon">🎊</span>
-        <div class="card-event-name">The Grand Finale</div>
-        <div class="card-title">Baraat & Walima</div>
-        <div class="card-detail">
-          <div class="card-detail-icon">📅</div>
-          <div><strong>Date</strong>29th June 2026, Monday</div>
+        <!-- Left rosettes -->
+        <div class="dholki-rosettes">
+          <div class="rosette">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" fill="#C8215A"/>
+              <circle cx="20" cy="20" r="12" fill="#D4AF37"/>
+              <circle cx="20" cy="20" r="7" fill="#C8215A"/>
+              <circle cx="20" cy="20" r="3" fill="#FFD700"/>
+              <!-- petals -->
+              <ellipse cx="20" cy="5" rx="3" ry="6" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="20" cy="35" rx="3" ry="6" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="5" cy="20" rx="6" ry="3" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="35" cy="20" rx="6" ry="3" fill="#FF6B6B" opacity="0.9"/>
+            </svg>
+          </div>
+          <div class="rosette">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" fill="#2D5A27"/>
+              <circle cx="20" cy="20" r="12" fill="#D4AF37"/>
+              <circle cx="20" cy="20" r="6" fill="#2D5A27"/>
+              <circle cx="20" cy="20" r="3" fill="#FFD700"/>
+              <ellipse cx="20" cy="5" rx="3" ry="5" fill="#4A8A3F" opacity="0.9"/>
+              <ellipse cx="20" cy="35" rx="3" ry="5" fill="#4A8A3F" opacity="0.9"/>
+              <ellipse cx="5" cy="20" rx="5" ry="3" fill="#4A8A3F" opacity="0.9"/>
+              <ellipse cx="35" cy="20" rx="5" ry="3" fill="#4A8A3F" opacity="0.9"/>
+            </svg>
+          </div>
+          <div class="rosette">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" fill="#C8215A"/>
+              <circle cx="20" cy="20" r="12" fill="#D4AF37"/>
+              <circle cx="20" cy="20" r="7" fill="#C8215A"/>
+              <circle cx="20" cy="20" r="3" fill="#FFD700"/>
+              <ellipse cx="20" cy="5" rx="3" ry="6" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="20" cy="35" rx="3" ry="6" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="5" cy="20" rx="6" ry="3" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="35" cy="20" rx="6" ry="3" fill="#FF6B6B" opacity="0.9"/>
+            </svg>
+          </div>
         </div>
-        <div class="card-detail">
-          <div class="card-detail-icon">⏰</div>
-          <div><strong>Time</strong>7:00 PM onwards</div>
+
+        <!-- Right rosettes -->
+        <div class="dholki-rosettes right">
+          <div class="rosette">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" fill="#C8215A"/>
+              <circle cx="20" cy="20" r="12" fill="#D4AF37"/>
+              <circle cx="20" cy="20" r="7" fill="#C8215A"/>
+              <circle cx="20" cy="20" r="3" fill="#FFD700"/>
+              <ellipse cx="20" cy="5" rx="3" ry="6" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="20" cy="35" rx="3" ry="6" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="5" cy="20" rx="6" ry="3" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="35" cy="20" rx="6" ry="3" fill="#FF6B6B" opacity="0.9"/>
+            </svg>
+          </div>
+          <div class="rosette">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" fill="#2D5A27"/>
+              <circle cx="20" cy="20" r="12" fill="#D4AF37"/>
+              <circle cx="20" cy="20" r="6" fill="#2D5A27"/>
+              <circle cx="20" cy="20" r="3" fill="#FFD700"/>
+              <ellipse cx="20" cy="5" rx="3" ry="5" fill="#4A8A3F" opacity="0.9"/>
+              <ellipse cx="20" cy="35" rx="3" ry="5" fill="#4A8A3F" opacity="0.9"/>
+              <ellipse cx="5" cy="20" rx="5" ry="3" fill="#4A8A3F" opacity="0.9"/>
+              <ellipse cx="35" cy="20" rx="5" ry="3" fill="#4A8A3F" opacity="0.9"/>
+            </svg>
+          </div>
+          <div class="rosette">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" fill="#C8215A"/>
+              <circle cx="20" cy="20" r="12" fill="#D4AF37"/>
+              <circle cx="20" cy="20" r="7" fill="#C8215A"/>
+              <circle cx="20" cy="20" r="3" fill="#FFD700"/>
+              <ellipse cx="20" cy="5" rx="3" ry="6" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="20" cy="35" rx="3" ry="6" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="5" cy="20" rx="6" ry="3" fill="#FF6B6B" opacity="0.9"/>
+              <ellipse cx="35" cy="20" rx="6" ry="3" fill="#FF6B6B" opacity="0.9"/>
+            </svg>
+          </div>
         </div>
-        <div class="card-detail">
-          <div class="card-detail-icon">👗</div>
-          <div><strong>Attire</strong>Formal — lehengas, sherwanis & your finest threads</div>
+
+        <!-- Women exclusive side labels -->
+        <span class="women-exclusive-text">✦ Women Exclusive ✦</span>
+        <span class="women-exclusive-text right">✦ Women Exclusive ✦</span>
+
+        <!-- Arched program panel -->
+        <div class="dholki-arch">
+          <div class="dholki-program-title">Dholki Program</div>
+          <ul class="program-schedule">
+            <li class="program-row">
+              <span class="prog-time">5:00 PM</span>
+              <span class="prog-divider"></span>
+              <span class="prog-event">Guests Arrival</span>
+            </li>
+            <li class="program-row">
+              <span class="prog-time">5:15 PM</span>
+              <span class="prog-divider"></span>
+              <span class="prog-event">Bride's Dhmakey Dar Entry</span>
+            </li>
+            <li class="program-row">
+              <span class="prog-time">5:30 PM</span>
+              <span class="prog-divider"></span>
+              <span class="prog-event">Dholak ki thaap</span>
+            </li>
+            <li class="program-row">
+              <span class="prog-time">6:00 PM</span>
+              <span class="prog-divider"></span>
+              <span class="prog-event">Fun Filled<br>Games</span>
+            </li>
+            <li class="program-row">
+              <span class="prog-time">7:00 PM</span>
+              <span class="prog-divider"></span>
+              <span class="prog-event">Ladies Luddi</span>
+            </li>
+            <li class="program-row">
+              <span class="prog-time">8:00 PM</span>
+              <span class="prog-divider"></span>
+              <span class="prog-event women-only">Dinner</span>
+            </li>
+            <li class="program-row">
+              <span class="prog-time">9:30 PM</span>
+              <span class="prog-divider"></span>
+              <span class="prog-event women-only">Family Fun (Men from the Family included)</span>
+            </li>
+          </ul>
         </div>
-        <div class="card-detail">
-          <div class="card-detail-icon">🌟</div>
-          <div><strong>Vibe</strong>Grand celebrations, dinner & dance floor!</div>
-        </div>
+
       </div>
-      <div class="card-pattern">🎊</div>
     </div>
   </div>
 </section>
@@ -1053,37 +1244,11 @@
 <!-- ===== DRESS CODE ===== -->
 <section id="dress-code">
   <div class="sec-header reveal">
-    <span class="sec-eyebrow">~ Dress to Impress ~</span>
-    <h2 class="sec-title" style="color:var(--cream);">90s Mehndi Palette</h2>
-  </div>
-  <div class="palette-row reveal">
-    <div class="palette-chip">
-      <div class="chip-swatch" style="background:#F4A200;"></div>
-      <div class="chip-name">Saffron</div>
-    </div>
-    <div class="palette-chip">
-      <div class="chip-swatch" style="background:#FFB800;"></div>
-      <div class="chip-name">Marigold</div>
-    </div>
-    <div class="palette-chip">
-      <div class="chip-swatch" style="background:#2D5A27;"></div>
-      <div class="chip-name">Mehendi Green</div>
-    </div>
-    <div class="palette-chip">
-      <div class="chip-swatch" style="background:#C8215A;"></div>
-      <div class="chip-name">Rani Pink</div>
-    </div>
-    <div class="palette-chip">
-      <div class="chip-swatch" style="background:#B5202A;"></div>
-      <div class="chip-name">Ruby Red</div>
-    </div>
-    <div class="palette-chip">
-      <div class="chip-swatch" style="background:#D4AF37;"></div>
-      <div class="chip-name">Pure Gold</div>
-    </div>
+    <span class="sec-eyebrow">~The Golden Era ✨~</span>
+    <h2 class="sec-title" style="color:var(--cream);">90's Mehndi</h2>
   </div>
   <p class="dress-note reveal" style="transition-delay:0.3s;">
-    Channel your inner 90s desi royalty 🌸 Think bright kurtas, mirror-work dupattas, chunky bangles and kohl-lined eyes. The more colour, the more barkat!
+    The 90s desi wedding was its own world 🌸. Dholki till midnight, marigolds everywhere, fairy lights that flickered but stayed up anyway, and all the women gathered around the bride humming tapay on dholak ki thap, sending her off to her new home wrapped in love. Mehndi nights weren’t planned to perfection, they just happened. Loud, chaotic, and somehow always beautiful. We’re bringing that energy back.
   </p>
 </section>
 
@@ -1095,12 +1260,12 @@
   </div>
   <div class="location-wrap">
     <div class="location-info reveal-left">
-      <h3>🏛️ Gulshan-e-Celebrations</h3>
+      <h3>🏛️ Wedding Hall</h3>
       <p>
         <strong style="color:var(--green);">Mehndi Venue</strong><br>
-        Plot 47, Garden Avenue<br>
-        Block 6, Gulshan-e-Iqbal<br>
-        Karachi, Pakistan
+        Doha<br>
+        Doha<br>
+        Doha, Qatar
       </p>
       <p style="color:#888;font-size:0.9rem;">
         Parking available on-site. Shuttle service from the main gate every 20 minutes.
@@ -1133,7 +1298,7 @@
       </svg>
       <!-- Animated pin -->
       <div class="map-pin-anim" style="position:absolute;top:37%;left:65%;transform:translate(-50%,-100%)">📍</div>
-      <div class="map-label" style="position:absolute;bottom:20px;width:100%;text-align:center;">Gulshan-e-Iqbal, Karachi</div>
+      <div class="map-label" style="position:absolute;bottom:20px;width:100%;text-align:center;">Doha, Qatar</div>
     </div>
   </div>
 </section>
@@ -1146,25 +1311,28 @@
   <div style="font-size:3rem;opacity:0.08;position:absolute;bottom:40px;left:50px;transform:rotate(10deg)">✨</div>
 
   <div class="reveal">
-    <div class="closing-title">شادی مبارک ✨</div>
+    <div class="closing-title"> اوہ بلے بلے✨</div>
     <div class="closing-msg">
-      With hearts full of joy and hands full of mehndi, we welcome you to share in the celebration of our most special night. Come, dance, and make memories with us.
+      Get ready for mehndi games, glittering dance circles and non-stop fun — this night is all about music, laughter and memories that last a lifetime.
     </div>
     <div style="margin:20px 0;">
-      <img src="assets/images/images (5).jfif" alt="Dhol" style="width:100px; height:100px; object-fit:contain; animation:bride-float 3s ease-in-out infinite; filter: drop-shadow(0 0 15px var(--gold));">
+      <img src="assets/images/bride.png" alt="Dhol" style="width:300px; height:200px; object-fit:contain; animation:bride-float 3s ease-in-out infinite; filter: drop-shadow(0 0 15px var(--gold));">
     </div>
     <div class="rsvp-note">
-      RSVP: Please confirm your presence by 20th June 2026<br>
-      <span style="color:var(--saffron);font-family:'Dancing Script',cursive;font-size:1.3rem;margin-top:10px;display:block;">
-        — With love, The Families 🌸
-      </span>
+      Looking forward to see you on 27th June 2026 at 5:00 PM for an unforgettable Mehndi celebration.
     </div>
+    <a class="rsvp-whatsapp" href="https://wa.me/+4917655221759?text=Hi!%20I%20would%20love%20to%20confirm%20my%20presence%20for%20the%20Mehndi%20celebration.%20" target="_blank" rel="noopener noreferrer">
+      <span>🌸</span> RSVP on WhatsApp
+    </a>
+    <span style="color:var(--saffron);font-family:'Dancing Script',cursive;font-size:1.3rem;margin-top:10px;display:block;">
+      — With love from <br>Mr Naeem</br> and Family.
+    </span>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  🌿 Made with love & mehndi 🌿 &nbsp; | &nbsp; Anusha & Arsala 2026
+  🌿 Made with love for 🌿 &nbsp; | &nbsp; Minahil & Talha 2026
 </footer>
 
 <script>
@@ -1184,17 +1352,17 @@
     }, 1200);
   });
 
-  // ===== FALLING PETALS =====
-  const petals = ['🌸', '🌼', '✨', '🌺', '💛', '🌿', '⭐', '🌻'];
+  // ===== FALLING ROSE PETALS =====
   const particleContainer = document.getElementById('particles');
   function createPetal() {
     const p = document.createElement('span');
     p.className = 'petal';
-    p.textContent = petals[Math.floor(Math.random() * petals.length)];
+    p.textContent = '🌹';
     p.style.left = Math.random() * 100 + 'vw';
     p.style.animationDuration = (Math.random() * 8 + 6) + 's';
     p.style.animationDelay = Math.random() * 5 + 's';
-    p.style.fontSize = (Math.random() * 0.8 + 0.6) + 'rem';
+    p.style.fontSize = (Math.random() * 0.8 + 0.8) + 'rem';
+    p.style.color = '#c11d2d';
     particleContainer.appendChild(p);
     setTimeout(() => p.remove(), 15000);
   }
@@ -1299,6 +1467,16 @@
       }
 
       showPlay();
+
+      // Start playback from 10 seconds once metadata is loaded.
+      bgMusic.addEventListener('loadedmetadata', () => {
+        if (bgMusic.duration > 10) {
+          bgMusic.currentTime = 10;
+        }
+      });
+      if (bgMusic.readyState >= 1 && bgMusic.duration > 10) {
+        bgMusic.currentTime = 10;
+      }
 
       // Attempt to unmute automatically. Many browsers block unmute without user gesture,
       // but some allow unmuting when the page is visible or after short delay.
