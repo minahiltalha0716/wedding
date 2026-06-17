@@ -70,7 +70,9 @@
   #hero {
     position: relative;
     min-height: 100vh;
-    background: linear-gradient(180deg, #1a0a05 0%, #2D1A00 40%, #4A2800 70%, var(--deep-cream) 100%);
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2), #1a0a05), url('assets/images/hero-banner-decor-idea-1.jpeg');
+    background-size: cover;
+    background-position: center;
     display: flex; align-items: center; justify-content: center;
     flex-direction: column;
     overflow: hidden;
@@ -133,9 +135,14 @@
     transform: translateY(0) scale(1);
   }
   #bride-sticker img {
-    width: 260px;
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 6px solid var(--gold);
     filter: drop-shadow(0 0 25px rgba(212,175,55,0.6));
     animation: bride-float 3s ease-in-out infinite;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
   }
   @keyframes bride-float {
     0%, 100% { transform: translateY(0); }
@@ -392,6 +399,9 @@
     font-size: 3rem;
     margin-bottom: 15px;
     display: block;
+    max-width: 60px;
+    max-height: 60px;
+    object-fit: contain;
   }
   .card-event-name {
     font-family: 'Dancing Script', cursive;
@@ -435,7 +445,9 @@
   .card-pattern {
     position: absolute;
     right: -20px; bottom: -20px;
-    font-size: 6rem;
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
     opacity: 0.06;
     transform: rotate(-15deg);
     pointer-events: none;
@@ -604,6 +616,45 @@
     font-size: 1rem;
     color: rgba(253,243,227,0.6);
     letter-spacing: 0.1em;
+  }
+
+  /* ---- BRIDE PORTRAIT ---- */
+  #bride-portrait {
+    padding: 100px 20px;
+    background: var(--deep-cream);
+    text-align: center;
+  }
+  .portrait-container {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    border-radius: 4px;
+    transform: rotate(-2deg);
+    transition: transform 0.5s ease;
+  }
+  .portrait-container:hover {
+    transform: rotate(0deg) scale(1.02);
+  }
+  .portrait-container img {
+    width: 100%;
+    display: block;
+    border: 1px solid #ddd;
+  }
+  .portrait-caption {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: var(--magenta);
+    margin-top: 25px;
+  }
+  .portrait-frame-deco {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 2;
+    pointer-events: none;
   }
 
   /* Sparkle effect */
@@ -830,7 +881,7 @@
 
   <!-- Bride Sticker -->
   <div id="bride-sticker">
-    <img src="bride.png" alt="Bride illustration">
+    <img src="assets/images/bride2.jpeg" alt="The Bride">
   </div>
 
   <!-- Hero Text -->
@@ -894,6 +945,20 @@
   </div>
 </section>
 
+<!-- ===== BRIDE PORTRAIT ===== -->
+<section id="bride-portrait" class="mehndi-bg">
+  <div class="sec-header reveal">
+    <span class="sec-eyebrow">~ Beautiful in Mehndi ~</span>
+    <h2 class="sec-title">The Bride</h2>
+  </div>
+  <div class="portrait-container reveal">
+    <div class="portrait-frame-deco" style="top:-30px; left:-30px; font-size:4rem; transform:rotate(-15deg);">🌸</div>
+    <div class="portrait-frame-deco" style="bottom:-30px; right:-30px; font-size:4rem; transform:rotate(15deg);">🌿</div>
+    <img src="assets/images/bride3.jpeg" alt="Minahil">
+    <div class="portrait-caption">Minahil</div>
+  </div>
+</section>
+
 <!-- ===== EVENT DETAILS ===== -->
 <section id="event-details" class="mehndi-bg">
   <div class="sec-header reveal">
@@ -906,7 +971,7 @@
     <div class="event-card reveal-left">
       <div class="card-top" style="background:linear-gradient(90deg,#C8215A,#F4A200,#C8215A);"></div>
       <div class="card-body">
-        <span class="card-icon">🥁</span>
+        <img src="assets/images/images (5).jfif" class="card-icon" alt="Dholki">
         <div class="card-event-name">Pre-celebration</div>
         <div class="card-title">Dholki Night</div>
         <div class="card-detail">
@@ -926,7 +991,7 @@
           <div><strong>Vibe</strong>Dhol, geet, and gup shup with the family</div>
         </div>
       </div>
-      <div class="card-pattern">🥁</div>
+      <img src="assets/images/images (5).jfif" class="card-pattern" alt="Dholki pattern">
     </div>
 
     <!-- Mehndi Card -->
@@ -1085,7 +1150,9 @@
     <div class="closing-msg">
       With hearts full of joy and hands full of mehndi, we welcome you to share in the celebration of our most special night. Come, dance, and make memories with us.
     </div>
-    <div style="font-size:3rem;margin:20px 0;animation:bride-float 3s ease-in-out infinite;">💐</div>
+    <div style="margin:20px 0;">
+      <img src="assets/images/images (5).jfif" alt="Dhol" style="width:100px; height:100px; object-fit:contain; animation:bride-float 3s ease-in-out infinite; filter: drop-shadow(0 0 15px var(--gold));">
+    </div>
     <div class="rsvp-note">
       RSVP: Please confirm your presence by 20th June 2026<br>
       <span style="color:var(--saffron);font-family:'Dancing Script',cursive;font-size:1.3rem;margin-top:10px;display:block;">
