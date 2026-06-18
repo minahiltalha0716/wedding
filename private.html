@@ -207,6 +207,26 @@
             transition: 0.3s;
         }
 
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header { padding: 40px 20px; }
+            h1 { font-size: 2.5rem; }
+            .timeline::after { left: 20px; }
+            .story-item, .story-item:nth-child(even) {
+                flex-direction: column !important;
+                align-items: flex-start;
+                margin-bottom: 60px;
+                gap: 20px;
+            }
+            .carousel-container, .story-content {
+                width: 100%;
+            }
+            .story-content {
+                padding: 10px 0 0 40px;
+            }
+            .story-content h3 { font-size: 2rem; }
+        }
+
         .hidden { display: none !important; }
     </style>
 </head>
@@ -256,6 +276,49 @@
 
         function formatTitle(text) {
             return text.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        function initCarousels() {
+            const tracks = document.querySelectorAll('.carousel-track');
+            tracks.forEach(track => {
+                let index = 0;
+                const slides = track.querySelectorAll('.carousel-slide');
+                if (slides.length <= 1) return;
+
+                setInterval(() => {
+                    index = (index + 1) % slides.length;
+                    track.style.transform = `translateX(-${index * 100}%)`;
+                }, 3500); // Slide every 3.5 seconds
+            });
+        }
+
+        function openOverlay(categoryIndex) {
+            const cat = globalGalleryData[categoryIndex];
+            const modal = document.getElementById('gallery-modal');
+            const grid = document.getElementById('modal-grid');
+            const title = document.getElementById('modal-title');
+
+            if (!cat) return;
+
+            title.innerText = formatTitle(cat.category);
+            grid.innerHTML = cat.images.map(img => `
+                <div class="modal-item" data-aos="zoom-in">
+                    <img src="${img}" class="modal-img">
+                </div>
+            `).join('');
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // Refresh AOS to trigger animations on the new modal images
+            setTimeout(() => {
+                AOS.refresh();
+            }, 100);
+        }
+
+        function closeOverlay() {
+            document.getElementById('gallery-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
 
         async function renderGallery(password) {
