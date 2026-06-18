@@ -1,11 +1,3 @@
 {
-  "images": [
-    {
-      "name": ".gitkeep",
-      "enc": ".gitkeep.enc",
-      "salt": "uu2YJITXCQdkXALYes62FQ==",
-      "iv": "hIHeHvijDgEY85yZ",
-      "type": "application/octet-stream"
-    }
-  ]
+  "images": []
 }

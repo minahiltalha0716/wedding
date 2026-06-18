@@ -1,4 +1,4 @@
-const ENCRYPTION_PASSWORD = localStorage.getItem('imagePassword') || null;
+const ENCRYPTION_PASSWORD = localStorage.getItem('imagePassword') ? localStorage.getItem('imagePassword').trim() : null;
 
 const textEncoder = new TextEncoder();
 
@@ -26,15 +26,20 @@ async function deriveKey(password, salt) {
 }
 
 async function decryptImage(encryptedBase64, password, saltBase64, ivBase64) {
-  // Use a more robust way to handle base64 to uint8array
   const toUint8Array = (base64) => {
-    const binaryString = atob(base64);
-    const len = binaryString.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
+    // Remove any whitespace or newlines that might break atob
+    const cleanBase64 = base64.replace(/\s/g, '');
+    try {
+        const binaryString = atob(cleanBase64);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        return bytes;
+    } catch (e) {
+        throw new Error(`Invalid base64 string: ${e.message}`);
     }
-    return bytes;
   };
 
   const encryptedBytes = toUint8Array(encryptedBase64);
@@ -52,20 +57,10 @@ async function decryptImage(encryptedBase64, password, saltBase64, ivBase64) {
 }
 
 function setImageAuth(password) {
-  localStorage.setItem('imagePassword', password);
+  localStorage.setItem('imagePassword', password.trim());
   window.location.reload();
 }
 
-/**
- * PRIVATE IMAGE LOADING LOGIC:
- * To maintain privacy while using a public static site, this project uses a build-time encryption strategy.
- * 1. Original images are kept in the 'images/' folder (which is .gitignored to prevent accidental public pushes).
- * 2. During the GitHub Actions deployment (deploy.yml), 'scripts/encrypt-images.js' is executed using a
- *    secret 'IMAGE_PASSWORD'.
- * 3. Encrypted versions of these images are generated in 'assets/encrypted-images/' along with a 'manifest.json'.
- * 4. Only the encrypted assets are deployed to the public repository.
- * 5. This script (main.js) performs client-side decryption using the user-provided password via Web Crypto API.
- */
 async function loadEncryptedImage(imageMeta, elementId) {
   const img = document.getElementById(elementId);
   if (!img) return;
@@ -77,36 +72,42 @@ async function loadEncryptedImage(imageMeta, elementId) {
 
   try {
     const response = await fetch(`assets/encrypted-images/${imageMeta.enc}`);
-    if (!response.ok) throw new Error('Failed to fetch encrypted image');
+    if (!response.ok) throw new Error(`Failed to fetch: ${imageMeta.enc}`);
 
     const encryptedBase64 = await response.text();
-    const imageBytes = await decryptImage(encryptedBase64.trim(), ENCRYPTION_PASSWORD, imageMeta.salt, imageMeta.iv);
+    const imageBytes = await decryptImage(encryptedBase64, ENCRYPTION_PASSWORD, imageMeta.salt, imageMeta.iv);
     const blob = new Blob([imageBytes], { type: imageMeta.type });
     const url = URL.createObjectURL(blob);
     img.src = url;
 
-    // Once image is loaded, trigger animation if using observer
     img.onload = () => {
         img.closest('.story-item').classList.add('image-loaded');
     };
   } catch (err) {
-    console.error('Error loading encrypted image:', err);
-    img.alt = 'Failed to decrypt image';
-    // If decryption fails, it might be an incorrect password
-    if (ENCRYPTION_PASSWORD) {
-        localStorage.removeItem('imagePassword');
-        const authError = document.getElementById('authError');
-        if (authError) authError.style.display = 'block';
-        setupAuthModal(true);
+    console.error('Decryption failed:', err);
+    img.alt = 'Access Denied';
+
+    // Check if it's likely a password error
+    if (err.name === 'OperationError' || err.message.includes('decrypt')) {
+        handleAuthError();
     }
   }
+}
+
+function handleAuthError() {
+    localStorage.removeItem('imagePassword');
+    const authError = document.getElementById('authError');
+    if (authError) {
+        authError.innerText = "Incorrect password. Please ensure it matches your invitation.";
+        authError.style.display = 'block';
+    }
+    setupAuthModal(true);
 }
 
 function createStoryItem(imageMeta, index) {
   const item = document.createElement('div');
   item.className = 'story-item';
 
-  // Create a dummy story based on index
   const stories = [
     { date: 'June 2023', title: 'The First Chapter', text: 'Where it all began. A simple hello that changed everything.' },
     { date: 'October 2023', title: 'A Special Day', text: 'Capturing moments that we will cherish forever.' },
@@ -139,15 +140,12 @@ function setupAuthModal(forceShow = false) {
 
   if (!authForm || !authModal) return;
 
-  authForm.addEventListener('submit', function (e) {
+  authForm.onsubmit = function (e) {
     e.preventDefault();
     const password = passwordInput.value;
-    if (!password) {
-      alert('Please enter a password');
-      return;
-    }
+    if (!password) return;
     setImageAuth(password);
-  });
+  };
 
   if (!ENCRYPTION_PASSWORD || forceShow) {
     authModal.style.display = 'flex';
@@ -163,7 +161,7 @@ async function initializeGallery() {
 
   try {
     const manifestResponse = await fetch('assets/encrypted-images/manifest.json');
-    if (!manifestResponse.ok) throw new Error('Manifest not found');
+    if (!manifestResponse.ok) return;
 
     const manifest = await manifestResponse.json();
     const gallery = document.getElementById('photoGallery');
@@ -177,40 +175,23 @@ async function initializeGallery() {
 
     setupScrollAnimations();
   } catch (err) {
-    console.error('Gallery initialization failed:', err);
+    console.error('Gallery failed to initialize:', err);
   }
 }
 
 function setupScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.2
-    };
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.1 });
 
-    document.querySelectorAll('.story-item').forEach(item => {
-        observer.observe(item);
-    });
-}
-
-function setupSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
+    document.querySelectorAll('.story-item').forEach(item => observer.observe(item));
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  setupSmoothScroll();
   setupAuthModal();
   initializeGallery();
 });
