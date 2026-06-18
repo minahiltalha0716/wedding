@@ -170,7 +170,13 @@
                 // Decrypt the data using the provided password
                 const key = CryptoJS.SHA256(password);
                 const iv = CryptoJS.enc.Hex.parse('00000000000000000000000000000000');
-                const decrypted = CryptoJS.AES.decrypt(encryptedBox.data, key, { iv: iv });
+                
+                // Convert hex string to CipherParams so CryptoJS knows how to handle it
+                const cipherParams = CryptoJS.lib.CipherParams.create({
+                    ciphertext: CryptoJS.enc.Hex.parse(encryptedBox.data)
+                });
+                
+                const decrypted = CryptoJS.AES.decrypt(cipherParams, key, { iv: iv });
                 
                 const rawJson = decrypted.toString(CryptoJS.enc.Utf8);
                 if (!rawJson) throw new Error("Decryption failed. Check password.");
