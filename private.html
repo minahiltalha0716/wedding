@@ -106,6 +106,20 @@
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             position: relative;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .carousel-container:hover {
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 15px 35px rgba(240, 98, 146, 0.3);
+            animation-play-state: paused;
         }
 
         .carousel-track {
@@ -121,9 +135,26 @@
 
         .story-img {
             width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
             display: block;
             transition: transform 0.3s;
         }
+        
+        .view-hint {
+            position: absolute;
+            bottom: 15px; right: 15px;
+            background: rgba(255,255,255,0.8);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--accent-pink);
+            font-weight: bold;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .carousel-container:hover .view-hint { opacity: 1; }
 
         .story-content {
             width: 45%;
@@ -135,6 +166,45 @@
             font-size: 2.5rem; 
             color: var(--accent-pink); 
             margin: 0;
+        }
+
+        /* Overlay Modal */
+        #gallery-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 20px; right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--accent-pink);
+            z-index: 2100;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .modal-img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
         }
 
         .hidden { display: none !important; }
@@ -164,10 +234,18 @@
         <div class="timeline" id="dynamic-timeline"></div>
     </div>
 
+    <!-- Full-screen Overlay -->
+    <div id="gallery-modal">
+        <span class="modal-close" onclick="closeOverlay()">&times;</span>
+        <h2 id="modal-title" style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: var(--accent-pink);"></h2>
+        <div class="modal-grid" id="modal-grid"></div>
+    </div>
+
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         // Note: The REAL_HASH is replaced during deployment via GitHub Actions
         const VALID_HASH = "e8bd4004982d26e8d603429d5a6f22dbc7e6eae4dff636aef476091d3fcc4666"; 
+        let globalGalleryData = [];
 
         async function hashPassword(password) {
             const msgUint8 = new TextEncoder().encode(password);
@@ -178,20 +256,6 @@
 
         function formatTitle(text) {
             return text.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-        }
-
-        function initCarousels() {
-            const tracks = document.querySelectorAll('.carousel-track');
-            tracks.forEach(track => {
-                let index = 0;
-                const slides = track.querySelectorAll('.carousel-slide');
-                if (slides.length <= 1) return;
-
-                setInterval(() => {
-                    index = (index + 1) % slides.length;
-                    track.style.transform = `translateX(-${index * 100}%)`;
-                }, 3500); // Scroll every 3.5 seconds
-            });
         }
 
         async function renderGallery(password) {
@@ -218,24 +282,25 @@
                     throw new Error("Failed to decrypt data. The key derived from the password might be incorrect.");
                 }
                 
-                const categories = JSON.parse(rawJson);
+                globalGalleryData = JSON.parse(rawJson);
                 const timeline = document.getElementById('dynamic-timeline');
                 
                 let html = '';
-                categories.forEach((cat, index) => {
+                globalGalleryData.forEach((cat, index) => {
                     const side = index % 2 === 0 ? 'fade-right' : 'fade-left';
                     const categoryTitle = formatTitle(cat.category);
 
                     html += `
                         <div class="story-item" data-aos="${side}">
-                            <div class="carousel-container">
+                            <div class="carousel-container" onclick="openOverlay(${index})">
                                 <div class="carousel-track">
                                     ${cat.images.map(base64Data => `
                                         <div class="carousel-slide">
-                                            <img src="${base64Data}" alt="${categoryTitle}" class="story-img">
+                                            <img src="${base64Data}" alt="${categoryTitle}" class="story-img" loading="lazy">
                                         </div>
                                     `).join('')}
                                 </div>
+                                <div class="view-hint">Click to see all ✨</div>
                             </div>
                             <div class="story-content">
                                 <h3>${categoryTitle}</h3>
@@ -246,7 +311,6 @@
                 });
                 
                 timeline.innerHTML = html;
-                initCarousels();
                 // Re-initialize AOS after content is injected
                 AOS.init({ duration: 1000, once: true });
             } catch (err) {
