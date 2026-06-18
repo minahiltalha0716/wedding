@@ -3,200 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Story - Minahil & Talha</title>
-    <!-- Standard Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/invitation.css">
+    <title>Our Journey | Private Gallery</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-pink: #fce4ec;
+            --accent-pink: #f06292;
+            --text-dark: #4a4a4a;
+            --soft-white: #ffffff;
+        }
+
         body {
-            background-color: #fdfaf6; /* Soft off-white */
-            color: #333;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--soft-white);
+            color: var(--text-dark);
+            overflow-x: hidden;
         }
-        .story-header {
-            padding: 80px 20px;
+
+        /* Password Overlay */
+        #auth-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(135deg, #fce4ec 0%, #ffffff 100%);
+            transition: opacity 0.5s ease;
+        }
+
+        .auth-card {
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('assets/images/hero-bg.jpg'); /* Need a placeholder or just color */
-            background-size: cover;
-            background-position: center;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid var(--accent-pink);
+            border-radius: 25px;
+            margin-top: 10px;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 25px;
+            background: var(--accent-pink);
             color: white;
-            margin-bottom: 50px;
+            border: none;
+            border-radius: 25px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .story-header h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 5rem;
-            margin-bottom: 10px;
+
+        /* Gallery Layout */
+        .header {
+            text-align: center;
+            padding: 80px 20px;
         }
-        .story-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
+
+        h1 { font-family: 'Dancing Script', cursive; font-size: 4rem; color: var(--accent-pink); margin-bottom: 10px; }
+
+        .timeline {
             position: relative;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
         }
-        /* The Timeline Line */
-        .story-container::before {
+        
+        .timeline::after {
             content: '';
             position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
             width: 2px;
-            background: var(--gold);
-            transform: translateX(-50%);
-            opacity: 0.3;
+            background: var(--primary-pink);
+            top: 0; bottom: 0; left: 50%;
+            margin-left: -1px;
+            z-index: -1;
         }
 
         .story-item {
-            margin-bottom: 100px;
-            position: relative;
-            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease-out;
-        }
-        .story-item.visible {
-            opacity: 1;
-            transform: translateY(0);
+            margin-bottom: 100px;
         }
 
-        .story-item:nth-child(even) {
-            flex-direction: row-reverse;
+        .story-item:nth-child(even) { flex-direction: row-reverse; }
+
+        .story-img {
+            width: 45%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
         }
+
+        .story-img:hover { transform: scale(1.05); }
 
         .story-content {
             width: 45%;
-            padding: 30px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            position: relative;
+            padding: 20px;
         }
 
-        .story-image-wrap {
-            width: 45%;
-            position: relative;
+        .story-content h3 { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: 2.5rem; 
+            color: var(--accent-pink); 
+            margin: 0;
         }
 
-        .story-image-wrap img {
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border: 5px solid white;
-            transition: transform 0.3s ease;
-        }
-
-        .story-image-wrap img:hover {
-            transform: scale(1.02);
-        }
-
-        .story-dot {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 20px;
-            height: 20px;
-            background: var(--gold);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            border: 4px solid white;
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
-            z-index: 2;
-        }
-
-        .story-date {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .story-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #7b1414; /* Maroon accent */
-        }
-
-        .story-text {
-            font-family: 'Montserrat', sans-serif;
-            line-height: 1.8;
-            color: #555;
-            font-size: 1rem;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .story-container::before {
-                left: 30px;
-            }
-            .story-item, .story-item:nth-child(even) {
-                flex-direction: column-reverse;
-                align-items: flex-start;
-                padding-left: 60px;
-            }
-            .story-content, .story-image-wrap {
-                width: 100%;
-                margin-bottom: 20px;
-            }
-            .story-dot {
-                left: 30px;
-            }
-            .story-header h1 {
-                font-size: 3.5rem;
-            }
-        }
-
-        /* Auth Modal Overlays */
-        #authModal {
-            background: rgba(253, 250, 246, 0.98);
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
-    <header class="story-header">
-        <div class="container">
-            <h1>Our Journey</h1>
-            <p class="subtitle" style="color: white; opacity: 0.9;">A beautiful story of love and togetherness</p>
-            <a href="index.html" style="color: white; text-decoration: none; margin-top: 20px; display: inline-block; font-size: 0.9rem; letter-spacing: 1px; border-bottom: 1px solid white;">← Back to Main Site</a>
-        </div>
-    </header>
 
-    <main>
-        <div class="container">
-            <!-- Auth Modal -->
-            <div id="authModal">
-                <div class="auth-modal-content" style="margin: 0 auto; text-align: center;">
-                    <h2 style="font-family: 'Playfair Display', serif;">Private Memories</h2>
-                    <p>This gallery is a private space for our close friends and family. Please enter the password to unlock our story.</p>
-                    <form id="authForm">
-                        <div class="auth-form-group">
-                            <input type="password" id="password" required placeholder="Enter Password" style="text-align: center; border-radius: 25px; padding: 12px;">
-                        </div>
-                        <button type="submit" class="auth-submit" style="border-radius: 25px; background: var(--gold); font-family: 'Montserrat', sans-serif; font-weight: 600; letter-spacing: 1px;">Unlock Story</button>
-                    </form>
-                    <div id="authError" style="color: #7b1414; margin-top: 15px; font-size: 0.9rem; display: none;">Incorrect password. Please try again.</div>
+    <!-- Simple Password Protection -->
+    <div id="auth-overlay">
+        <div class="auth-card">
+            <h2>Welcome to our Private Moments</h2>
+            <p>Please enter the secret password</p>
+            <input type="password" id="password-input" placeholder="Password...">
+            <br><button onclick="checkPassword()">Enter Our World</button>
+            <p id="error-msg" style="color: red; display: none;">Wrong password, try again!</p>
+        </div>
+    </div>
+
+    <!-- Gallery Content -->
+    <div id="gallery-content" class="hidden">
+        <div class="header" data-aos="fade-up">
+            <h1>Our Story</h1>
+            <p>Every moment spent with you is a beautiful dream come true.</p>
+        </div>
+
+        <div class="timeline">
+            <!-- Story Item 1 -->
+            <div class="story-item" data-aos="fade-right">
+                <img src="images/event1.jpg" alt="First Date" class="story-img">
+                <div class="story-content">
+                    <h3>Where it all began</h3>
+                    <p>On this day, we took our first step together. A simple coffee turned into a lifetime of conversations.</p>
                 </div>
             </div>
 
-            <!-- Story Gallery -->
-            <div id="photoGallery" class="story-container" style="display: none;">
-                <!-- Story items will be dynamically loaded here -->
+            <!-- Story Item 2 -->
+            <div class="story-item" data-aos="fade-left">
+                <img src="images/event2.jpg" alt="Proposal" class="story-img">
+                <div class="story-content">
+                    <h3>The Big 'Yes'</h3>
+                    <p>Under the stars, with a heart full of hope, we decided to be forever. It was the most beautiful night of our lives.</p>
+                </div>
             </div>
+
+            <!-- Add more items as needed -->
         </div>
-    </main>
+    </div>
 
-    <footer class="footer">
-        <p>Minahil & Talha &bull; 2024</p>
-    </footer>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Note: The REAL_HASH is replaced during deployment via GitHub Actions
+        const VALID_HASH = "e8bd4004982d26e8d603429d5a6f22dbc7e6eae4dff636aef476091d3fcc4666"; 
 
-    <script src="assets/js/main.js"></script>
+        async function hashPassword(password) {
+            const msgUint8 = new TextEncoder().encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const hashedInput = await hashPassword(input);
+            
+            if (hashedInput === VALID_HASH) {
+                document.getElementById('auth-overlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('auth-overlay').classList.add('hidden');
+                    document.getElementById('gallery-content').classList.remove('hidden');
+                    AOS.init({ duration: 1000, once: true });
+                }, 500);
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
