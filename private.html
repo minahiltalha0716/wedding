@@ -172,10 +172,10 @@
                     const side = index % 2 === 0 ? 'fade-right' : 'fade-left';
                     const categoryTitle = formatTitle(cat.category);
                     
-                    cat.images.forEach(img => {
+                    cat.images.forEach(base64Data => {
                         html += `
                             <div class="story-item" data-aos="${side}">
-                                <img src="${cat.path}/${img}" alt="${categoryTitle}" class="story-img">
+                                <img src="${base64Data}" alt="${categoryTitle}" class="story-img">
                                 <div class="story-content">
                                     <h3>${categoryTitle}</h3>
                                     <p>A beautiful moment from our ${categoryTitle} event.</p>
