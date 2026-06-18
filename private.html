@@ -163,7 +163,7 @@
 
         async function renderGallery() {
             try {
-                const response = await fetch('gallery-manifest.json');
+                const response = await fetch('assets/gallery-manifest.json');
                 const categories = await response.json();
                 const timeline = document.getElementById('dynamic-timeline');
                 
@@ -175,7 +175,7 @@
                     cat.images.forEach(img => {
                         html += `
                             <div class="story-item" data-aos="${side}">
-                                <img src="images/${cat.category}/${img}" alt="${categoryTitle}" class="story-img">
+                                <img src="${cat.path}/${img}" alt="${categoryTitle}" class="story-img">
                                 <div class="story-content">
                                     <h3>${categoryTitle}</h3>
                                     <p>A beautiful moment from our ${categoryTitle} event.</p>
