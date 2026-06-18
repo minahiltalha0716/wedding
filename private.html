@@ -3,59 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Wedding Gallery - Minahil & Talha</title>
+    <title>Our Story - Minahil & Talha</title>
+    <!-- Standard Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/invitation.css">
     <style>
-        .gallery-section { padding: 4rem 0; min-height: 80vh; }
-        .gallery-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .back-home { margin-bottom: 2rem; display: inline-block; color: var(--accent-red); text-decoration: none; font-weight: 600; }
-        .back-home:hover { text-decoration: underline; }
+        body {
+            background-color: #fdfaf6; /* Soft off-white */
+            color: #333;
+        }
+        .story-header {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('assets/images/hero-bg.jpg'); /* Need a placeholder or just color */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        .story-header h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 5rem;
+            margin-bottom: 10px;
+        }
+        .story-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+        /* The Timeline Line */
+        .story-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: var(--gold);
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+
+        .story-item {
+            margin-bottom: 100px;
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        .story-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .story-content {
+            width: 45%;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+        }
+
+        .story-image-wrap {
+            width: 45%;
+            position: relative;
+        }
+
+        .story-image-wrap img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 5px solid white;
+            transition: transform 0.3s ease;
+        }
+
+        .story-image-wrap img:hover {
+            transform: scale(1.02);
+        }
+
+        .story-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid white;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+            z-index: 2;
+        }
+
+        .story-date {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .story-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #7b1414; /* Maroon accent */
+        }
+
+        .story-text {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.8;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .story-container::before {
+                left: 30px;
+            }
+            .story-item, .story-item:nth-child(even) {
+                flex-direction: column-reverse;
+                align-items: flex-start;
+                padding-left: 60px;
+            }
+            .story-content, .story-image-wrap {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .story-dot {
+                left: 30px;
+            }
+            .story-header h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        /* Auth Modal Overlays */
+        #authModal {
+            background: rgba(253, 250, 246, 0.98);
+        }
     </style>
 </head>
 <body>
-    <header class="site-header">
+    <header class="story-header">
         <div class="container">
-            <h1 class="site-title">Private Wedding Photos</h1>
-            <p class="subtitle">Secure gallery for family and friends</p>
+            <h1>Our Journey</h1>
+            <p class="subtitle" style="color: white; opacity: 0.9;">A beautiful story of love and togetherness</p>
+            <a href="index.html" style="color: white; text-decoration: none; margin-top: 20px; display: inline-block; font-size: 0.9rem; letter-spacing: 1px; border-bottom: 1px solid white;">← Back to Main Site</a>
         </div>
     </header>
 
     <main>
-        <section class="gallery-section">
-            <div class="gallery-container">
-                <a href="/" class="back-home">← Back to Home</a>
-
-                <!-- Auth Modal (managed by main.js) -->
-                <div id="authModal" style="display: none;">
-                    <div class="auth-modal-content" style="margin: 0 auto;">
-                        <h2>Private Access</h2>
-                        <p>Please enter the password provided in your invitation to unlock the gallery.</p>
-                        <form id="authForm">
-                            <div class="auth-form-group">
-                                <label for="password">Password:</label>
-                                <input type="password" id="password" required placeholder="Enter password">
-                            </div>
-                            <button type="submit" class="auth-submit">Unlock Gallery</button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Gallery Container (managed by main.js) -->
-                <div class="gallery" id="photoGallery">
-                    <!-- Photos will be loaded here by main.js -->
+        <div class="container">
+            <!-- Auth Modal -->
+            <div id="authModal">
+                <div class="auth-modal-content" style="margin: 0 auto; text-align: center;">
+                    <h2 style="font-family: 'Playfair Display', serif;">Private Memories</h2>
+                    <p>This gallery is a private space for our close friends and family. Please enter the password to unlock our story.</p>
+                    <form id="authForm">
+                        <div class="auth-form-group">
+                            <input type="password" id="password" required placeholder="Enter Password" style="text-align: center; border-radius: 25px; padding: 12px;">
+                        </div>
+                        <button type="submit" class="auth-submit" style="border-radius: 25px; background: var(--gold); font-family: 'Montserrat', sans-serif; font-weight: 600; letter-spacing: 1px;">Unlock Story</button>
+                    </form>
+                    <div id="authError" style="color: #7b1414; margin-top: 15px; font-size: 0.9rem; display: none;">Incorrect password. Please try again.</div>
                 </div>
             </div>
-        </section>
+
+            <!-- Story Gallery -->
+            <div id="photoGallery" class="story-container" style="display: none;">
+                <!-- Story items will be dynamically loaded here -->
+            </div>
+        </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <p>Made with ❤️ for Minahil & Talha</p>
-        </div>
+    <footer class="footer">
+        <p>Minahil & Talha &bull; 2024</p>
     </footer>
 
-    <!-- Scripts -->
-    <script src="assets/js/crypto.js"></script> <!-- Dependency for main.js if it exists separately -->
+    <script src="assets/js/crypto.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
