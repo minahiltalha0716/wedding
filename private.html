@@ -142,28 +142,7 @@
             <p>Every moment spent with you is a beautiful dream come true.</p>
         </div>
 
-        <div class="timeline">
-            <!-- Story Item 1 -->
-            <div class="story-item" data-aos="fade-right">
-                <!-- Ensure these filenames match your files exactly (including .jpg vs .JPG) -->
-                <img src="images/event1.jpg" alt="Our First Date" class="story-img" onerror="this.parentElement.style.border='1px solid red'; console.log('Failed to load: ' + this.src)">
-                <div class="story-content">
-                    <h3>Where it all began</h3>
-                    <p>On this day, we took our first step together. A simple coffee turned into a lifetime of conversations.</p>
-                </div>
-            </div>
-
-            <!-- Story Item 2 -->
-            <div class="story-item" data-aos="fade-left">
-                <img src="images/event2.jpg" alt="The Proposal" class="story-img" onerror="this.parentElement.style.border='1px solid red'">
-                <div class="story-content">
-                    <h3>The Big 'Yes'</h3>
-                    <p>Under the stars, with a heart full of hope, we decided to be forever. It was the most beautiful night of our lives.</p>
-                </div>
-            </div>
-
-            <!-- Add more items as needed -->
-        </div>
+        <div class="timeline" id="dynamic-timeline"></div>
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -178,16 +157,52 @@
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
+        function formatTitle(text) {
+            return text.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        async function renderGallery() {
+            try {
+                const response = await fetch('gallery-manifest.json');
+                const categories = await response.json();
+                const timeline = document.getElementById('dynamic-timeline');
+                
+                let html = '';
+                categories.forEach((cat, index) => {
+                    const side = index % 2 === 0 ? 'fade-right' : 'fade-left';
+                    const categoryTitle = formatTitle(cat.category);
+                    
+                    cat.images.forEach(img => {
+                        html += `
+                            <div class="story-item" data-aos="${side}">
+                                <img src="images/${cat.category}/${img}" alt="${categoryTitle}" class="story-img">
+                                <div class="story-content">
+                                    <h3>${categoryTitle}</h3>
+                                    <p>A beautiful moment from our ${categoryTitle} event.</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                });
+                
+                timeline.innerHTML = html;
+                // Re-initialize AOS after content is injected
+                AOS.init({ duration: 1000, once: true });
+            } catch (err) {
+                console.error("Failed to load gallery manifest", err);
+            }
+        }
+
         async function checkPassword() {
             const input = document.getElementById('password-input').value;
             const hashedInput = await hashPassword(input);
             
             if (hashedInput === VALID_HASH) {
                 document.getElementById('auth-overlay').style.opacity = '0';
-                setTimeout(() => {
+                setTimeout(async () => {
                     document.getElementById('auth-overlay').classList.add('hidden');
                     document.getElementById('gallery-content').classList.remove('hidden');
-                    AOS.init({ duration: 1000, once: true });
+                    await renderGallery();
                 }, 500);
             } else {
                 document.getElementById('error-msg').style.display = 'block';
