@@ -99,14 +99,31 @@
 
         .story-item:nth-child(even) { flex-direction: row-reverse; }
 
-        .story-img {
+        /* Carousel Styles */
+        .carousel-container {
             width: 45%;
+            overflow: hidden;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
+            position: relative;
         }
 
-        .story-img:hover { transform: scale(1.05); }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1);
+            width: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+
+        .story-img {
+            width: 100%;
+            display: block;
+            transition: transform 0.3s;
+        }
 
         .story-content {
             width: 45%;
@@ -163,6 +180,20 @@
             return text.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         }
 
+        function initCarousels() {
+            const tracks = document.querySelectorAll('.carousel-track');
+            tracks.forEach(track => {
+                let index = 0;
+                const slides = track.querySelectorAll('.carousel-slide');
+                if (slides.length <= 1) return;
+
+                setInterval(() => {
+                    index = (index + 1) % slides.length;
+                    track.style.transform = `translateX(-${index * 100}%)`;
+                }, 3500); // Scroll every 3.5 seconds
+            });
+        }
+
         async function renderGallery(password) {
             try {
                 const response = await fetch('assets/gallery-manifest.json');
@@ -194,21 +225,28 @@
                 categories.forEach((cat, index) => {
                     const side = index % 2 === 0 ? 'fade-right' : 'fade-left';
                     const categoryTitle = formatTitle(cat.category);
-                    
-                    cat.images.forEach(base64Data => {
-                        html += `
-                            <div class="story-item" data-aos="${side}">
-                                <img src="${base64Data}" alt="${categoryTitle}" class="story-img">
-                                <div class="story-content">
-                                    <h3>${categoryTitle}</h3>
-                                    <p>A beautiful moment from our ${categoryTitle} event.</p>
+
+                    html += `
+                        <div class="story-item" data-aos="${side}">
+                            <div class="carousel-container">
+                                <div class="carousel-track">
+                                    ${cat.images.map(base64Data => `
+                                        <div class="carousel-slide">
+                                            <img src="${base64Data}" alt="${categoryTitle}" class="story-img">
+                                        </div>
+                                    `).join('')}
                                 </div>
                             </div>
-                        `;
-                    });
+                            <div class="story-content">
+                                <h3>${categoryTitle}</h3>
+                                <p>Capturing the magic of our ${categoryTitle}. Each photo tells a part of our beautiful journey together.</p>
+                            </div>
+                        </div>
+                    `;
                 });
                 
                 timeline.innerHTML = html;
+                initCarousels();
                 // Re-initialize AOS after content is injected
                 AOS.init({ duration: 1000, once: true });
             } catch (err) {
