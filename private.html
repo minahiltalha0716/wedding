@@ -145,7 +145,8 @@
         <div class="timeline">
             <!-- Story Item 1 -->
             <div class="story-item" data-aos="fade-right">
-                <img src="images/event1.jpg" alt="First Date" class="story-img">
+                <!-- Ensure these filenames match your files exactly (including .jpg vs .JPG) -->
+                <img src="images/event1.jpg" alt="Our First Date" class="story-img" onerror="this.parentElement.style.border='1px solid red'; console.log('Failed to load: ' + this.src)">
                 <div class="story-content">
                     <h3>Where it all began</h3>
                     <p>On this day, we took our first step together. A simple coffee turned into a lifetime of conversations.</p>
@@ -154,7 +155,7 @@
 
             <!-- Story Item 2 -->
             <div class="story-item" data-aos="fade-left">
-                <img src="images/event2.jpg" alt="Proposal" class="story-img">
+                <img src="images/event2.jpg" alt="The Proposal" class="story-img" onerror="this.parentElement.style.border='1px solid red'">
                 <div class="story-content">
                     <h3>The Big 'Yes'</h3>
                     <p>Under the stars, with a heart full of hope, we decided to be forever. It was the most beautiful night of our lives.</p>
