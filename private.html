@@ -132,6 +132,7 @@
             <p>Please enter the secret password</p>
             <input type="password" id="password-input" placeholder="Password...">
             <br><button onclick="checkPassword()">Enter Our World</button>
+            <p id="loading-msg" style="display: none; color: var(--accent-pink);">Unlocking our memories...</p>
             <p id="error-msg" style="color: red; display: none;">Wrong password, try again!</p>
         </div>
     </div>
@@ -220,14 +221,19 @@
             const hashedInput = await hashPassword(input);
             
             if (hashedInput === VALID_HASH) {
-                document.getElementById('auth-overlay').style.opacity = '0';
+                document.getElementById('error-msg').style.display = 'none';
+                document.getElementById('loading-msg').style.display = 'block';
+                
                 setTimeout(async () => {
+                    await renderGallery(input);
+                    document.getElementById('auth-overlay').style.opacity = '0';
                     document.getElementById('auth-overlay').classList.add('hidden');
                     document.getElementById('gallery-content').classList.remove('hidden');
-                    await renderGallery(input);
+                    document.getElementById('password-input').value = ''; // Clear password from memory
                 }, 500);
             } else {
                 document.getElementById('error-msg').style.display = 'block';
+                document.getElementById('loading-msg').style.display = 'none';
             }
         }
     </script>
