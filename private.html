@@ -4,108 +4,442 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Journey | Private Gallery</title>
+    <meta name="description" content="A private gallery of our most cherished wedding memories — Minahil & Talha">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=archivo@300,400,700&f[]=clash-display@400,600,700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <style>
+        /* ============================
+           DESIGN TOKENS
+           ============================ */
         :root {
-            --primary-pink: #fce4ec;
-            --accent-pink: #f06292;
-            --text-dark: #4a4a4a;
-            --soft-white: #ffffff;
+            --color-bg-deep: #0a0a14;
+            --color-burgundy: #6b1d3a;
+            --color-gold: #c9a96e;
+            --color-gold-light: #e8d5a3;
+            --color-gold-glow: rgba(201, 169, 110, 0.35);
+            --color-rose: #f4e1e1;
+            --color-cream: #faf7f2;
+            --color-text: #2d2d2d;
+            --color-text-light: #8a8a8a;
+
             --slide-width: min(35vw, 400px);
             --slide-aspect: 2 / 3;
             --slide-transition-duration: 800ms;
+
+            --font-heading: "Playfair Display", serif;
+            --font-decorative: "Great Vibes", cursive;
+            --font-body: "Montserrat", sans-serif;
             --font-clash: "Clash Display", sans-serif;
             --font-archivo: "Archivo", sans-serif;
         }
 
-        body {
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--soft-white);
-            color: var(--text-dark);
-            overflow-x: hidden;
+        /* ============================
+           RESET & BASE
+           ============================ */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-gold) var(--color-cream);
         }
 
-        /* Password Overlay */
+        body {
+            margin: 0;
+            font-family: var(--font-body);
+            background-color: var(--color-cream);
+            color: var(--color-text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================
+           CUSTOM SCROLLBAR
+           ============================ */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-cream); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--color-gold), #b8944e);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--color-gold-light); }
+
+        /* ============================
+           AUTH OVERLAY
+           ============================ */
         #auth-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
+            inset: 0;
+            z-index: 1000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            background: linear-gradient(135deg, #fce4ec 0%, #ffffff 100%);
-            transition: opacity 0.5s ease;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(107, 29, 58, 0.45) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(107, 29, 58, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(201, 169, 110, 0.12) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a14 0%, #12111a 50%, #1a1520 100%);
+            clip-path: circle(150% at 50% 50%);
+            transition: clip-path 1.4s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
+        #auth-overlay.dissolving {
+            clip-path: circle(0% at 50% 50%);
+        }
+
+        /* Glass Card */
         .auth-card {
+            position: relative;
             text-align: center;
-            padding: 2rem;
-            background: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-radius: 15px;
+            padding: 3rem 2.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            border-radius: 28px;
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            max-width: 420px;
+            width: 90%;
+            animation: card-entrance 1s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        input {
-            padding: 10px;
-            border: 1px solid var(--accent-pink);
-            border-radius: 25px;
-            margin-top: 10px;
+        .auth-lock-icon {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 24px;
+            color: var(--color-gold);
+            opacity: 0.85;
+        }
+
+        .auth-card h2 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 400;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0 0 8px;
+            line-height: 1.3;
+        }
+
+        .auth-subtitle {
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.35);
+            margin: 0 0 36px;
+            letter-spacing: 1.5px;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: none;
+            border-bottom: 2px solid rgba(201, 169, 110, 0.2);
+            border-radius: 12px 12px 0 0;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            letter-spacing: 4px;
             text-align: center;
             outline: none;
+            transition: border-color 0.4s ease, background 0.4s ease;
         }
 
-        button {
-            padding: 10px 25px;
-            background: var(--accent-pink);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: 0.3s;
+        .auth-input:focus {
+            border-bottom-color: var(--color-gold);
+            background: rgba(255, 255, 255, 0.07);
         }
 
-        /* Gallery Layout */
-        .header {
-            text-align: center;
-            padding: 80px 20px;
+        .auth-input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 2px;
+            font-size: 0.85rem;
         }
 
-        h1 { font-family: 'Dancing Script', cursive; font-size: 4rem; color: var(--accent-pink); margin-bottom: 10px; }
-
-        .timeline {
+        .auth-btn {
             position: relative;
-            max-width: 1000px;
-            margin: 50px auto;
-            padding: 20px;
+            display: inline-block;
+            padding: 15px 48px;
+            margin-top: 24px;
+            background: linear-gradient(135deg, var(--color-gold), #b8944e);
+            color: #1a1520;
+            border: none;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .timeline::after {
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 40px var(--color-gold-glow);
+        }
+
+        .auth-btn::after {
             content: '';
             position: absolute;
-            width: 2px;
-            background: var(--primary-pink);
-            top: 0; bottom: 0; left: 50%;
-            margin-left: -1px;
-            z-index: -1;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 3s ease-in-out infinite;
         }
 
-        .story-item {
-            display: flex;
-            justify-content: space-between;
+        .auth-error {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: #ff6b6b;
+            margin-top: 18px;
+            display: none;
+        }
+
+        .auth-loading {
+            display: none;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 100px;
+            gap: 14px;
+            margin-top: 24px;
         }
 
-        .story-item:nth-child(even) { flex-direction: row-reverse; }
+        .spinner-ring {
+            width: 34px; height: 34px;
+            border: 2px solid rgba(201, 169, 110, 0.12);
+            border-top-color: var(--color-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
 
-        /* --- VOYAGE SLIDER STYLES --- */
+        .auth-loading span {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: var(--color-gold-light);
+            letter-spacing: 1.5px;
+        }
+
+        /* Bokeh Particles */
+        .bokeh-particle {
+            position: absolute;
+            bottom: -10px;
+            border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(232, 213, 163, 0.7), transparent 70%);
+            animation: bokeh-rise linear infinite;
+            will-change: transform, opacity;
+        }
+
+        /* ============================
+           GALLERY HERO
+           ============================ */
+        .gallery-hero {
+            text-align: center;
+            padding: 110px 20px 70px;
+            background: linear-gradient(180deg, var(--color-cream) 0%, #fff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-hero h1 {
+            font-family: var(--font-decorative);
+            font-size: 5rem;
+            color: var(--color-gold);
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: 1.05rem;
+            color: var(--color-text-light);
+            margin-top: 12px;
+            letter-spacing: 2px;
+        }
+
+        .ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .ornament-line {
+            display: block;
+            width: 80px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+        }
+
+        .ornament-diamond {
+            color: var(--color-gold);
+            font-size: 0.55rem;
+            opacity: 0.8;
+        }
+
+        /* ============================
+           TIMELINE
+           ============================ */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0; bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, transparent 0%, var(--color-gold) 5%, var(--color-gold) 95%, transparent 100%);
+            transform: translateX(-50%);
+            opacity: 0.4;
+        }
+
+        /* Chapter */
+        .chapter {
+            position: relative;
+            margin-bottom: 130px;
+        }
+
+        .chapter:last-child { margin-bottom: 60px; }
+
+        .chapter-node {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px; height: 50px;
+            background: var(--color-cream);
+            border: 2px solid var(--color-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 0 0 6px var(--color-cream);
+        }
+
+        .chapter-node span {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            color: var(--color-gold);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .chapter-node.in-view {
+            background: var(--color-gold);
+            box-shadow: 0 0 0 6px var(--color-cream), 0 0 25px var(--color-gold-glow);
+        }
+
+        .chapter-node.in-view span { color: white; }
+
+        .chapter-body {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chapter:nth-child(even) .chapter-body {
+            flex-direction: row-reverse;
+        }
+
+        /* Chapter Info */
+        .chapter-info {
+            width: 33%;
+            padding: 24px;
+        }
+
+        .chapter:nth-child(even) .chapter-info {
+            text-align: right;
+        }
+
+        .chapter-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--color-gold);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .chapter-info h3 {
+            font-family: var(--font-decorative);
+            font-size: 2.8rem;
+            color: var(--color-gold);
+            margin: 0 0 16px;
+            line-height: 1.2;
+        }
+
+        .gold-divider {
+            width: 60px; height: 2px;
+            background: linear-gradient(90deg, var(--color-gold), transparent);
+            margin-bottom: 16px;
+        }
+
+        .chapter:nth-child(even) .gold-divider {
+            margin-left: auto;
+            background: linear-gradient(270deg, var(--color-gold), transparent);
+        }
+
+        .chapter-info p {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: 0.92rem;
+            color: var(--color-text-light);
+            line-height: 1.85;
+            margin: 0 0 24px;
+        }
+
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 28px;
+            background: transparent;
+            border: 1px solid rgba(201, 169, 110, 0.4);
+            border-radius: 50px;
+            color: var(--color-gold);
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.35s ease;
+        }
+
+        .view-all-btn:hover {
+            background: var(--color-gold);
+            color: white;
+            border-color: var(--color-gold);
+            box-shadow: 0 6px 20px var(--color-gold-glow);
+            transform: translateY(-1px);
+        }
+
+        .view-all-btn svg { transition: transform 0.3s ease; }
+        .view-all-btn:hover svg { transform: translateX(4px); }
+
+        /* ============================
+           SLIDER / CAROUSEL
+           ============================ */
         .slider {
             width: 55%;
             height: 500px;
@@ -115,11 +449,35 @@
         }
 
         .slider--btn {
-            background: none; border: none; cursor: pointer;
-            padding: 10px; z-index: 100; opacity: 0.6; transition: 0.3s;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(201, 169, 110, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            z-index: 100;
+            padding: 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            flex-shrink: 0;
         }
-        .slider--btn:hover { opacity: 1; }
-        .slider--btn svg { stroke: var(--accent-pink); width: 40px; height: 40px; }
+
+        .slider--btn:hover {
+            background: var(--color-gold);
+            border-color: var(--color-gold);
+            box-shadow: 0 6px 24px var(--color-gold-glow);
+        }
+
+        .slider--btn svg {
+            width: 20px; height: 20px;
+            stroke: var(--color-gold);
+            stroke-width: 2.5;
+            transition: stroke 0.3s ease;
+        }
+
+        .slider--btn:hover svg { stroke: white; }
 
         .slides__wrapper {
             width: 100%; height: 100%;
@@ -137,23 +495,29 @@
         .slide {
             width: var(--slide-width);
             aspect-ratio: var(--slide-aspect);
-            perspective: 1000px;
-            transition: transform var(--slide-transition-duration) ease;
+            perspective: 1200px;
+            transition: transform var(--slide-transition-duration) cubic-bezier(0.22, 1, 0.36, 1),
+                        opacity calc(var(--slide-transition-duration) * 0.6) ease;
             user-select: none;
         }
 
         .slide[data-current] {
-            transform: perspective(1000px) translate3d(0, 0, 0) rotateY(0) scale(1.1);
-            z-index: 10; pointer-events: auto; cursor: pointer;
+            transform: perspective(1200px) translate3d(0, 0, 0) rotateY(0) scale(1.1);
+            z-index: 10;
+            pointer-events: auto;
+            cursor: pointer;
         }
+
         .slide[data-next] {
-            transform: perspective(1000px) translate3d(70%, 0, -200px) rotateY(-45deg) scale(0.9);
-            z-index: 5; opacity: 0.6;
+            transform: perspective(1200px) translate3d(70%, 0, -200px) rotateY(-45deg) scale(0.9);
+            z-index: 5; opacity: 0.5;
         }
+
         .slide[data-previous] {
-            transform: perspective(1000px) translate3d(-70%, 0, -200px) rotateY(45deg) scale(0.9);
-            z-index: 5; opacity: 0.6;
+            transform: perspective(1200px) translate3d(-70%, 0, -200px) rotateY(45deg) scale(0.9);
+            z-index: 5; opacity: 0.5;
         }
+
         .slide:not([data-current]):not([data-next]):not([data-previous]) {
             opacity: 0; transform: scale(0.5);
         }
@@ -161,9 +525,16 @@
         .slide__inner {
             width: 100%; height: 100%;
             transform-style: preserve-3d;
-            border-radius: 15px; overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            transition: transform 0.1s ease-out;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+        }
+
+        .slide[data-current] .slide__inner {
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(201, 169, 110, 0.2);
         }
 
         .slide--image {
@@ -172,7 +543,7 @@
             transform: scale(1.25) translate3d(var(--bgPosX, 0), var(--bgPosY, 0), 0);
         }
 
-        /* Info Layers */
+        /* Slide Info Layers */
         .slide-info {
             width: var(--slide-width);
             aspect-ratio: var(--slide-aspect);
@@ -188,182 +559,473 @@
         }
 
         .slide-info--text {
-            color: white; font-family: var(--font-clash);
-            overflow: hidden; text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            color: white;
+            font-family: var(--font-clash);
+            overflow: hidden;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
+
         .slide-info--text span {
             display: flex;
             transition: var(--slide-transition-duration) cubic-bezier(0.2, 1, 0.3, 1);
         }
 
-        .slide-info--text[data-title] { font-size: 2.5rem; font-weight: 700; text-transform: uppercase; }
-        .slide-info--text[data-description] { 
-            font-family: var(--font-archivo); font-size: 0.9rem; font-weight: 300; 
-            margin-top: 5px; opacity: 0.9;
+        .slide-info--text[data-title] {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        /* Background Logic */
+        .slide-info--text[data-description] {
+            font-family: var(--font-archivo);
+            font-size: 0.85rem;
+            font-weight: 300;
+            margin-top: 5px;
+            opacity: 0.85;
+        }
+
+        /* Slide Background */
         .slide__bg {
             position: absolute;
-            inset: 0;
+            inset: -10px;
             background-image: var(--bg);
             background-size: cover;
             background-position: center;
             z-index: -1;
             opacity: 0;
-            transition: opacity 0.8s ease;
-            border-radius: 20px;
+            transition: opacity 1s ease;
+            border-radius: 24px;
         }
         .slide__bg::before {
-            content: ""; position: absolute; inset: 0;
-            background: rgba(0,0,0,0.2); backdrop-filter: blur(4px);
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(250, 247, 242, 0.75);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 24px;
         }
         .slide__bg[data-current] { opacity: 1; }
 
-        .view-hint {
-            position: relative;
-            margin-top: 10px;
-            font-size: 0.7rem;
-            color: var(--accent-pink);
-            font-weight: bold;
-            text-align: center;
+        /* Slider Dots */
+        .slider-dots {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 20;
         }
 
-        .story-content {
-            width: 40%;
-            padding: 20px;
+        .slider-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: rgba(201, 169, 110, 0.25);
+            transition: all 0.4s ease;
+            cursor: pointer;
         }
 
-        .story-content h3 { 
-            font-family: 'Dancing Script', cursive; 
-            font-size: 2.5rem; 
-            color: var(--accent-pink); 
-            margin: 0;
+        .slider-dot.active {
+            background: var(--color-gold);
+            box-shadow: 0 0 8px var(--color-gold-glow);
+            transform: scale(1.3);
         }
 
-        /* Overlay Modal */
+        /* ============================
+           MODAL / LIGHTBOX
+           ============================ */
         #gallery-modal {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
+            inset: 0;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 2000;
             display: none;
             flex-direction: column;
             align-items: center;
-            padding: 60px 20px;
+            padding: 80px 24px 40px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
 
         .modal-close {
             position: fixed;
-            top: 15px; right: 20px;
-            font-size: 2.5rem;
-            cursor: pointer;
-            color: var(--accent-pink);
-            z-index: 2500;
-            width: 44px;
-            height: 44px;
+            top: 20px; right: 24px;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 2500;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.5rem;
+            transition: all 0.35s ease;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        #modal-title {
+            font-family: var(--font-decorative);
+            font-size: 3rem;
+            color: var(--color-gold-light);
+            margin: 0 0 12px;
+        }
+
+        .modal-title-divider {
+            width: 80px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+            margin: 0 auto 40px;
         }
 
         .modal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            columns: 3;
+            column-gap: 18px;
             max-width: 1200px;
             width: 100%;
-            margin-top: 40px;
+        }
+
+        .modal-item {
+            break-inside: avoid;
+            margin-bottom: 18px;
         }
 
         .modal-img {
             width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: 0.3s;
+            border-radius: 14px;
+            display: block;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
-        /* Mobile Responsiveness */
+        .modal-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 35px rgba(201, 169, 110, 0.25);
+        }
+
+        /* ============================
+           FLOATING PETALS
+           ============================ */
+        .petals-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            top: -20px;
+            pointer-events: none;
+            will-change: transform, opacity;
+            animation: petal-fall linear infinite;
+        }
+
+        .petal-shape {
+            width: 14px; height: 14px;
+            background: linear-gradient(135deg, rgba(244, 225, 225, 0.7), rgba(201, 169, 110, 0.25));
+            border-radius: 50% 0 50% 50%;
+            transform: rotate(45deg);
+        }
+
+        /* ============================
+           SPARKLE CURSOR
+           ============================ */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--color-gold-light), transparent 70%);
+            animation: sparkle-fade 0.7s ease-out forwards;
+            will-change: transform, opacity;
+        }
+
+        /* ============================
+           FOOTER
+           ============================ */
+        .gallery-footer {
+            text-align: center;
+            padding: 48px 20px;
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            border-top: 1px solid rgba(201, 169, 110, 0.15);
+            background: var(--color-cream);
+            letter-spacing: 0.5px;
+        }
+
+        .gallery-footer .heart {
+            display: inline-block;
+            animation: heartbeat 1.5s ease infinite;
+            font-style: normal;
+        }
+
+        /* ============================
+           KEYFRAME ANIMATIONS
+           ============================ */
+        @keyframes card-entrance {
+            from { opacity: 0; transform: translateY(30px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0)   scale(1); }
+        }
+
+        @keyframes shimmer {
+            0%   { left: -100%; }
+            100% { left: 200%; }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80%      { transform: translateX(8px); }
+        }
+
+        .shake { animation: shake 0.6s ease; }
+
+        @keyframes bokeh-rise {
+            0%   { transform: translateY(0)      scale(0);   opacity: 0; }
+            10%  { transform: translateY(-10vh)   scale(1);   opacity: 0.8; }
+            90%  { transform: translateY(-100vh)  scale(0.7); opacity: 0.15; }
+            100% { transform: translateY(-115vh)  scale(0.4); opacity: 0; }
+        }
+
+        @keyframes petal-fall {
+            0%   { transform: translateY(-5vh)  translateX(0)    rotate(0deg);   opacity: 0; }
+            8%   { opacity: 0.7; }
+            50%  { transform: translateY(50vh)  translateX(80px) rotate(360deg); opacity: 0.4; }
+            100% { transform: translateY(110vh) translateX(20px) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes sparkle-fade {
+            0%   { transform: scale(1);  opacity: 1; }
+            100% { transform: scale(0) translateY(-18px); opacity: 0; }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14%      { transform: scale(1.3); }
+            28%      { transform: scale(1); }
+            42%      { transform: scale(1.3); }
+            56%      { transform: scale(1); }
+        }
+
+        @keyframes gallery-entrance {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        #gallery-content.entering {
+            animation: gallery-entrance 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+        }
+
+        /* ============================
+           RESPONSIVE — TABLET
+           ============================ */
+        @media (max-width: 1024px) {
+            :root { --slide-width: min(45vw, 350px); }
+
+            .chapter-info h3 { font-size: 2.2rem; }
+            .chapter-info { width: 38%; padding: 16px; }
+            .slider { width: 52%; height: 450px; }
+            .modal-grid { columns: 2; }
+
+            .chapter-node {
+                width: 44px; height: 44px;
+            }
+        }
+
+        /* ============================
+           RESPONSIVE — MOBILE
+           ============================ */
         @media (max-width: 768px) {
-            .header { padding: 60px 20px 20px; }
-            h1 { font-size: 2.5rem; }
-            .timeline::after { left: 20px; }
-            .story-item, .story-item:nth-child(even) {
+            :root { --slide-width: min(65vw, 280px); }
+
+            .gallery-hero { padding: 80px 20px 50px; }
+            .gallery-hero h1 { font-size: 3.2rem; }
+            .hero-subtitle { font-size: 0.9rem; }
+
+            .timeline::before { left: 24px; }
+
+            .chapter {
+                padding-left: 58px;
+                margin-bottom: 80px;
+            }
+
+            .chapter-node {
+                left: 24px;
+                top: 8px;
+                transform: translateX(-50%) translateY(0);
+                width: 40px; height: 40px;
+                box-shadow: 0 0 0 5px var(--color-cream);
+            }
+
+            .chapter-node span { font-size: 0.75rem; }
+
+            .chapter-body,
+            .chapter:nth-child(even) .chapter-body {
                 flex-direction: column !important;
-                align-items: flex-start;
-                margin-bottom: 50px;
-                gap: 20px;
+                gap: 24px;
             }
-            .slider, .story-content {
+
+            .chapter-info,
+            .chapter:nth-child(even) .chapter-info {
                 width: 100%;
+                text-align: left !important;
+                padding: 0;
+                order: 1;
             }
-            .story-content {
-                padding: 10px 0 0 40px;
+
+            .chapter:nth-child(even) .gold-divider {
+                margin-left: 0 !important;
+                background: linear-gradient(90deg, var(--color-gold), transparent) !important;
             }
-            .story-content h3 { font-size: 2rem; }
-            
-            .slider { height: 400px; }
-            #gallery-modal {
-                padding: 70px 15px 30px;
+
+            .chapter-info h3 { font-size: 2rem; }
+
+            .slider {
+                width: 100%;
+                height: 380px;
+                order: 2;
             }
-            .modal-grid {
-                grid-template-columns: 1fr; /* Single column on mobile for better visibility */
-                gap: 15px;
-            }
+
+            .slider--btn { width: 40px; height: 40px; }
+            .slider--btn svg { width: 16px; height: 16px; }
+
+            .slider-dots { bottom: -24px; }
+            .slider-dot { width: 6px; height: 6px; }
+
+            .modal-grid { columns: 1; gap: 14px; }
+            #modal-title { font-size: 2rem; }
+            #gallery-modal { padding: 70px 16px 30px; }
+
             .modal-close {
-                top: 10px;
-                right: 10px;
-                font-size: 2rem;
+                top: 12px; right: 14px;
+                width: 44px; height: 44px;
             }
-            #modal-title { font-size: 2rem !important; }
         }
 
+        /* ============================
+           RESPONSIVE — SMALL MOBILE
+           ============================ */
+        @media (max-width: 480px) {
+            :root { --slide-width: min(75vw, 250px); }
+
+            .gallery-hero h1 { font-size: 2.6rem; }
+            .hero-subtitle { font-size: 0.82rem; letter-spacing: 1px; }
+            .ornament-line { width: 50px; }
+
+            .chapter-info h3 { font-size: 1.7rem; }
+            .chapter-info p { font-size: 0.85rem; }
+
+            .slider { height: 340px; }
+
+            .slide-info--text[data-title] { font-size: 1.5rem; }
+            .slide-info--text[data-description] { font-size: 0.75rem; }
+
+            .auth-card { padding: 2rem 1.5rem; }
+            .auth-card h2 { font-size: 1.5rem; }
+            .auth-btn { padding: 13px 36px; font-size: 0.75rem; letter-spacing: 2px; }
+        }
+
+        /* ============================
+           UTILITY
+           ============================ */
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <!-- Simple Password Protection -->
+    <!-- ========================
+         AUTH OVERLAY
+         ======================== -->
     <div id="auth-overlay">
-        <div class="auth-card">
-            <h2>Welcome to our Private Moments</h2>
-            <p>Please enter the secret password</p>
-            <input type="password" id="password-input" placeholder="Password...">
-            <br><button onclick="checkPassword()">Enter Our World</button>
-            <p id="loading-msg" style="display: none; color: var(--accent-pink);">Unlocking our memories...</p>
-            <p id="error-msg" style="color: red; display: none;">Wrong password, try again!</p>
+        <div class="auth-card" id="auth-card">
+            <div class="auth-lock-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    <circle cx="12" cy="16.5" r="1.5" fill="currentColor" stroke="none"/>
+                </svg>
+            </div>
+            <h2>Enter Our Private World</h2>
+            <p class="auth-subtitle">This gallery is protected with a secret password</p>
+
+            <input type="password" id="password-input" class="auth-input" placeholder="•  •  •  •  •  •">
+            <br>
+            <button class="auth-btn" onclick="checkPassword()" id="auth-submit-btn">Unlock Memories</button>
+
+            <div class="auth-loading" id="loading-msg">
+                <div class="spinner-ring"></div>
+                <span>Unlocking memories…</span>
+            </div>
+            <p class="auth-error" id="error-msg">Hmm, that's not quite right. Try again!</p>
         </div>
     </div>
 
-    <!-- Gallery Content -->
+    <!-- ========================
+         GALLERY CONTENT
+         ======================== -->
     <div id="gallery-content" class="hidden">
-        <div class="header" data-aos="fade-up">
+        <section class="gallery-hero" data-aos="fade-up">
             <h1>Our Story</h1>
-            <p>Every moment spent with you is a beautiful dream come true.</p>
-        </div>
+            <p class="hero-subtitle">Every chapter of our journey, captured in moments</p>
+            <div class="ornament">
+                <span class="ornament-line"></span>
+                <span class="ornament-diamond">◆</span>
+                <span class="ornament-line"></span>
+            </div>
+        </section>
 
         <div class="timeline" id="dynamic-timeline"></div>
+
+        <footer class="gallery-footer">
+            Made with <em class="heart">❤️</em> for Minahil & Talha
+        </footer>
     </div>
 
-    <!-- Full-screen Overlay -->
+    <!-- ========================
+         LIGHTBOX MODAL
+         ======================== -->
     <div id="gallery-modal">
-        <span class="modal-close" onclick="closeOverlay()">&times;</span>
-        <h2 id="modal-title" style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: var(--accent-pink);"></h2>
+        <button class="modal-close" onclick="closeOverlay()" aria-label="Close gallery">&times;</button>
+        <h2 id="modal-title"></h2>
+        <div class="modal-title-divider"></div>
         <div class="modal-grid" id="modal-grid"></div>
     </div>
 
+    <!-- ========================
+         SCRIPTS
+         ======================== -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
+        /* ==================================
+           CONSTANTS & STATE
+           ================================== */
         // Note: The REAL_HASH is replaced during deployment via GitHub Actions
-        const VALID_HASH = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"; 
+        const VALID_HASH = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
         let globalGalleryData = [];
+        let sparkleEnabled = false;
 
+        /* ==================================
+           UTILITY FUNCTIONS (preserved)
+           ================================== */
         async function hashPassword(password) {
             const msgUint8 = new TextEncoder().encode(password);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
@@ -375,37 +1037,51 @@
             return text.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         }
 
-        // Close modal when clicking the background
+        /* ==================================
+           EVENT LISTENERS
+           ================================== */
+        // Close modal on background click
         document.getElementById('gallery-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeOverlay();
-            }
+            if (e.target === this) closeOverlay();
         });
 
-        // --- Slider Logic ---
+        // Escape key closes modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeOverlay();
+        });
+
+        // Enter key submits password
+        document.getElementById('password-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        /* ==================================
+           3D TILT EFFECT (preserved)
+           ================================== */
         const lerp = (a, b, t) => a + (b - a) * t;
 
         function applyTilt(node, targetEls) {
             let curRot = { x: 0, y: 0 }, tarRot = { x: 0, y: 0 };
-            let curBg = { x: 0, y: 0 }, tarBg = { x: 0, y: 0 };
+            let curBg  = { x: 0, y: 0 }, tarBg  = { x: 0, y: 0 };
 
             node.addEventListener('mousemove', (e) => {
                 const rect = node.getBoundingClientRect();
                 const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
-                const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
-                tarRot.x = x * 10; tarRot.y = -y * 10;
-                tarBg.x = -x * 5; tarBg.y = -y * 5;
+                const y = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
+                tarRot.x = x * 10;  tarRot.y = -y * 10;
+                tarBg.x  = -x * 5;  tarBg.y  = -y * 5;
             });
 
             node.addEventListener('mouseleave', () => {
-                tarRot.x = 0; tarRot.y = 0; tarBg.x = 0; tarBg.y = 0;
+                tarRot.x = 0; tarRot.y = 0;
+                tarBg.x  = 0; tarBg.y  = 0;
             });
 
             function animate() {
                 curRot.x = lerp(curRot.x, tarRot.x, 0.1);
                 curRot.y = lerp(curRot.y, tarRot.y, 0.1);
-                curBg.x = lerp(curBg.x, tarBg.x, 0.1);
-                curBg.y = lerp(curBg.y, tarBg.y, 0.1);
+                curBg.x  = lerp(curBg.x,  tarBg.x,  0.1);
+                curBg.y  = lerp(curBg.y,  tarBg.y,  0.1);
 
                 targetEls.forEach(el => {
                     el.style.transform = `rotateX(${curRot.y}deg) rotateY(${curRot.x}deg)`;
@@ -417,15 +1093,19 @@
             animate();
         }
 
+        /* ==================================
+           CAROUSEL LOGIC (enhanced)
+           ================================== */
         function initCarousels() {
             const sliders = document.querySelectorAll('.slider');
             sliders.forEach(slider => {
-                const slides = slider.querySelectorAll('.slide');
-                const bgs = slider.querySelectorAll('.slide__bg');
-                const infos = slider.querySelectorAll('.slide-info');
+                const slides  = slider.querySelectorAll('.slide');
+                const bgs     = slider.querySelectorAll('.slide__bg');
+                const infos   = slider.querySelectorAll('.slide-info');
+                const dots    = slider.querySelectorAll('.slider-dot');
                 const btnNext = slider.querySelector('.slider--btn__next');
                 const btnPrev = slider.querySelector('.slider--btn__prev');
-                
+
                 let currentIndex = 0;
 
                 const update = (dir) => {
@@ -439,50 +1119,78 @@
                             el.removeAttribute('data-current');
                             el.removeAttribute('data-next');
                             el.removeAttribute('data-previous');
-                            if (i === currentIndex) el.setAttribute('data-current', '');
-                            else if (i === next) el.setAttribute('data-next', '');
-                            else if (i === prev) el.setAttribute('data-previous', '');
+                            if (i === currentIndex)   el.setAttribute('data-current', '');
+                            else if (i === next)      el.setAttribute('data-next', '');
+                            else if (i === prev)      el.setAttribute('data-previous', '');
                         });
+                    });
+
+                    // Update dots
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === currentIndex);
                     });
                 };
 
                 btnNext.addEventListener('click', () => update(1));
                 btnPrev.addEventListener('click', () => update(-1));
 
-                // Setup Tilt for each slide
-                slides.forEach((slide, i) => {
-                    const inner = slide.querySelector('.slide__inner');
-                    const infoInner = infos[i].querySelector('.slide-info__inner');
-                    applyTilt(slide, [inner, infoInner]);
+                // Touch / swipe support
+                let touchStartX = 0;
+                slider.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+
+                slider.addEventListener('touchend', (e) => {
+                    const diff = touchStartX - e.changedTouches[0].screenX;
+                    if (Math.abs(diff) > 50) update(diff > 0 ? 1 : -1);
                 });
-                
+
+                // Setup tilt for each slide
+                slides.forEach((slide, i) => {
+                    const inner     = slide.querySelector('.slide__inner');
+                    const infoInner = infos[i] ? infos[i].querySelector('.slide-info__inner') : null;
+                    if (inner && infoInner) applyTilt(slide, [inner, infoInner]);
+                });
+
                 // Initial state
                 update(0);
             });
+
+            // Animate chapter nodes on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const node = entry.target.querySelector('.chapter-node');
+                        if (node) node.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll('.chapter').forEach(ch => observer.observe(ch));
         }
 
+        /* ==================================
+           OVERLAY MODAL (preserved + enhanced)
+           ================================== */
         function openOverlay(categoryIndex) {
-            const cat = globalGalleryData[categoryIndex];
+            const cat   = globalGalleryData[categoryIndex];
             const modal = document.getElementById('gallery-modal');
-            const grid = document.getElementById('modal-grid');
+            const grid  = document.getElementById('modal-grid');
             const title = document.getElementById('modal-title');
 
             if (!cat) return;
 
             title.innerText = formatTitle(cat.category);
-            grid.innerHTML = cat.images.map(img => `
-                <div class="modal-item" data-aos="zoom-in">
-                    <img src="${img}" class="modal-img">
+            grid.innerHTML = cat.images.map((img, i) => `
+                <div class="modal-item" data-aos="fade-up" data-aos-delay="${Math.min(i * 50, 300)}">
+                    <img src="${img}" class="modal-img" loading="lazy" alt="${formatTitle(cat.category)} — Photo ${i + 1}">
                 </div>
             `).join('');
 
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            
-            // Refresh AOS to trigger animations on the new modal images
-            setTimeout(() => {
-                AOS.refresh();
-            }, 100);
+
+            setTimeout(() => AOS.refresh(), 100);
         }
 
         function closeOverlay() {
@@ -490,21 +1198,24 @@
             document.body.style.overflow = 'auto';
         }
 
+        /* ==================================
+           GALLERY RENDERER (preserved + new template)
+           ================================== */
         async function renderGallery(password) {
             try {
-                const response = await fetch('assets/gallery-manifest.json');
+                const response     = await fetch('assets/gallery-manifest.json');
                 const encryptedBox = await response.json();
-                
+
                 // Decrypt the data using the provided password
                 const key = CryptoJS.SHA256(password);
-                const iv = CryptoJS.enc.Hex.parse('00000000000000000000000000000000');
-                
+                const iv  = CryptoJS.enc.Hex.parse('00000000000000000000000000000000');
+
                 const decrypted = CryptoJS.AES.decrypt(
                     { ciphertext: CryptoJS.enc.Hex.parse(encryptedBox.data) },
                     key,
                     { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 }
                 );
-                
+
                 let rawJson;
                 try {
                     rawJson = decrypted.toString(CryptoJS.enc.Utf8);
@@ -513,68 +1224,78 @@
                     console.error("UTF-8 Decoding Error:", e);
                     throw new Error("Failed to decrypt data. The key derived from the password might be incorrect.");
                 }
-                
+
                 globalGalleryData = JSON.parse(rawJson);
                 const timeline = document.getElementById('dynamic-timeline');
-                
+
                 let html = '';
                 globalGalleryData.forEach((cat, index) => {
-                    const side = index % 2 === 0 ? 'fade-right' : 'fade-left';
                     const categoryTitle = formatTitle(cat.category);
+                    const chapterNum    = String(index + 1).padStart(2, '0');
 
                     html += `
-                        <div class="story-item" data-aos="${side}">
-                            <div class="slider">
-                                <button class="slider--btn slider--btn__prev">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-                                </button>
-                                <div class="slides__wrapper">
-                                    <div class="slides">
-                                        ${cat.images.map((base64Data) => `
-                                            <div class="slide" onclick="openOverlay(${index})">
-                                                <div class="slide__inner">
-                                                    <img src="${base64Data}" class="slide--image" loading="lazy">
+                        <div class="chapter" data-aos="fade-up" data-aos-duration="900" data-aos-delay="${index * 80}">
+                            <div class="chapter-node"><span>${chapterNum}</span></div>
+                            <div class="chapter-body">
+                                <div class="slider">
+                                    <button class="slider--btn slider--btn__prev" aria-label="Previous photo">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m15 18-6-6 6-6"/></svg>
+                                    </button>
+                                    <div class="slides__wrapper">
+                                        <div class="slides">
+                                            ${cat.images.map((base64Data) => `
+                                                <div class="slide" onclick="openOverlay(${index})">
+                                                    <div class="slide__inner">
+                                                        <img src="${base64Data}" class="slide--image" loading="lazy" alt="${categoryTitle}">
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            `).join('')}
+                                        </div>
+                                        ${cat.images.map((base64Data) => `
+                                            <div class="slide__bg" style="--bg: url(${base64Data})"></div>
                                         `).join('')}
-                                    </div>
-                                    ${cat.images.map((base64Data, imgIndex) => {
-                                        return `
-                                        <div class="slide__bg" style="--bg: url(${base64Data})"></div>
-                                        `;
-                                    }).join('')}
-                                    <div class="slides--infos">
-                                        ${cat.images.map((_, imgIndex) => `
-                                            <div class="slide-info">
-                                                <div class="slide-info__inner">
-                                                    <div class="slide-info--text__wrapper">
-                                                        <div data-title class="slide-info--text">
-                                                            <span>${categoryTitle}</span>
-                                                        </div>
-                                                        <div data-description class="slide-info--text">
-                                                            <span>Moment #${imgIndex + 1}</span>
+                                        <div class="slides--infos">
+                                            ${cat.images.map((_, imgIndex) => `
+                                                <div class="slide-info">
+                                                    <div class="slide-info__inner">
+                                                        <div class="slide-info--text__wrapper">
+                                                            <div data-title class="slide-info--text">
+                                                                <span>${categoryTitle}</span>
+                                                            </div>
+                                                            <div data-description class="slide-info--text">
+                                                                <span>Moment #${imgIndex + 1}</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        `).join('')}
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                    <button class="slider--btn slider--btn__next" aria-label="Next photo">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"/></svg>
+                                    </button>
+                                    <div class="slider-dots">
+                                        ${cat.images.map((_, i) => `<div class="slider-dot${i === 0 ? ' active' : ''}"></div>`).join('')}
                                     </div>
                                 </div>
-                                <button class="slider--btn slider--btn__next">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
-                                </button>
-                                <div class="view-hint" style="position:absolute; bottom:-30px; width:100%;">Click image to see all ✨</div>
-                            </div>
-                            <div class="story-content">
-                                <h3>${categoryTitle}</h3>
-                                <p>Capturing the magic of our ${categoryTitle}. Each photo tells a part of our beautiful journey together.</p>
+                                <div class="chapter-info">
+                                    <span class="chapter-label">Chapter ${chapterNum}</span>
+                                    <h3>${categoryTitle}</h3>
+                                    <div class="gold-divider"></div>
+                                    <p>Capturing the magic of our ${categoryTitle}. Each photo tells a part of our beautiful journey together.</p>
+                                    <button class="view-all-btn" onclick="openOverlay(${index})">
+                                        View All Photos
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     `;
                 });
-                
+
                 timeline.innerHTML = html;
-                // Re-initialize AOS after content is injected
+
+                // Re-initialize AOS after content injection
                 AOS.init({ duration: 1000, once: true });
                 initCarousels();
             } catch (err) {
@@ -582,26 +1303,126 @@
             }
         }
 
+        /* ==================================
+           PASSWORD CHECK (enhanced transition)
+           ================================== */
         async function checkPassword() {
-            const input = document.getElementById('password-input').value;
+            const input       = document.getElementById('password-input').value;
             const hashedInput = await hashPassword(input);
-            
+
             if (hashedInput === VALID_HASH) {
-                document.getElementById('error-msg').style.display = 'none';
-                document.getElementById('loading-msg').style.display = 'block';
-                
+                document.getElementById('error-msg').style.display   = 'none';
+                document.getElementById('loading-msg').style.display = 'flex';
+                document.getElementById('auth-submit-btn').style.display = 'none';
+
                 setTimeout(async () => {
                     await renderGallery(input);
-                    document.getElementById('auth-overlay').style.opacity = '0';
-                    document.getElementById('auth-overlay').classList.add('hidden');
+
+                    // Iris wipe transition
+                    const overlay = document.getElementById('auth-overlay');
+                    overlay.classList.add('dissolving');
+
                     document.getElementById('gallery-content').classList.remove('hidden');
-                    document.getElementById('password-input').value = ''; // Clear password from memory
-                }, 500);
+                    document.getElementById('gallery-content').classList.add('entering');
+
+                    sparkleEnabled = true;
+                    createPetals();
+
+                    setTimeout(() => {
+                        overlay.classList.add('hidden');
+                    }, 1500);
+
+                    document.getElementById('password-input').value = '';
+                }, 800);
             } else {
-                document.getElementById('error-msg').style.display = 'block';
+                document.getElementById('error-msg').style.display   = 'block';
                 document.getElementById('loading-msg').style.display = 'none';
+
+                // Shake animation
+                const card = document.getElementById('auth-card');
+                card.classList.remove('shake');
+                void card.offsetWidth; // force reflow
+                card.classList.add('shake');
+                setTimeout(() => card.classList.remove('shake'), 700);
             }
         }
+
+        /* ==================================
+           DECORATIVE — BOKEH PARTICLES
+           ================================== */
+        function createParticles() {
+            const container = document.getElementById('auth-overlay');
+            const count = window.innerWidth < 768 ? 25 : 50;
+
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'bokeh-particle';
+                const size = Math.random() * 7 + 2;
+                p.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    animation-duration: ${Math.random() * 10 + 8}s;
+                    animation-delay: ${Math.random() * 8}s;
+                `;
+                container.appendChild(p);
+            }
+        }
+
+        /* ==================================
+           DECORATIVE — FLOATING PETALS
+           ================================== */
+        function createPetals() {
+            const container = document.createElement('div');
+            container.className = 'petals-container';
+            document.body.appendChild(container);
+
+            const count = window.innerWidth < 768 ? 8 : 15;
+            for (let i = 0; i < count; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.innerHTML = '<div class="petal-shape"></div>';
+                petal.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    animation-duration: ${Math.random() * 12 + 12}s;
+                    animation-delay: ${Math.random() * 15}s;
+                    opacity: ${Math.random() * 0.35 + 0.1};
+                    transform: scale(${Math.random() * 0.6 + 0.7});
+                `;
+                container.appendChild(petal);
+            }
+        }
+
+        /* ==================================
+           DECORATIVE — SPARKLE CURSOR
+           ================================== */
+        if (!('ontouchstart' in window)) {
+            let lastSparkle = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                if (!sparkleEnabled) return;
+                const now = Date.now();
+                if (now - lastSparkle < 80) return;
+                lastSparkle = now;
+
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                const size = Math.random() * 5 + 2;
+                sparkle.style.cssText = `
+                    left: ${e.clientX + (Math.random() - 0.5) * 30}px;
+                    top:  ${e.clientY + (Math.random() - 0.5) * 30}px;
+                    width:  ${size}px;
+                    height: ${size}px;
+                `;
+                document.body.appendChild(sparkle);
+                sparkle.addEventListener('animationend', () => sparkle.remove());
+            });
+        }
+
+        /* ==================================
+           INIT
+           ================================== */
+        createParticles();
     </script>
 </body>
 </html>
